@@ -12,5 +12,11 @@ then
 	exit 1
 fi
 
+DISTDIR="`make -V DISTDIR`"
+SUDO=""
+# See if sudo(1)
+[ ! -w ${DISTDIR} ] && SUDO="sudo"
+
+
 # Fetch new version
-rm -f distinfo && make fetch && make makesum
+rm -f distinfo && ${SUDO} make fetch && make makesum

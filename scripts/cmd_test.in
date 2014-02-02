@@ -133,23 +133,25 @@ then
 fi
 
 # Go through the build phases
-for PHASE in build install package deinstall
+for PHASE in build stage check-orphans package install deinstall
 do
 	SUDO="sudo"
 	[ "${PHASE}" = "build" ] && SUDO=""
+	[ "${PHASE}" = "stage" ] && SUDO=""
+	[ "${PHASE}" = "check-orphans" ] && SUDO=""
 
 	if [ "${PHASE}" = "deinstall" ]
 	then
-        PKGNG="`make -V WITH_PKGNG`"
-        if [ ! -z ${PKGNG} ]
-        then
-		    echo "===>  Checking pkg info"
-            pkg info -f ${PKGNAME}
-            echo "===>  Checking shared library dependencies"
-            pkg query %B ${PKGNAME} |sed -e "s,^,${PREFIX}," | \
-                xargs ldd 2>&1 | \
+		PKGNG="`make -V WITH_PKGNG`"
+		if [ ! -z ${PKGNG} ]
+		then
+			echo "===>  Checking pkg info"
+			pkg info -f ${PKGNAME}
+			echo "===>  Checking shared library dependencies"
+			pkg query %B ${PKGNAME} |sed -e "s,^,${PREFIX}," | \
+					xargs ldd 2>&1 | \
 					grep -v "not a dynamic executable" | \
-						grep '=>' | awk '{print $3;}' | sort -u
+					grep '=>' | awk '{print $3;}' | sort -u
 
         else
 		# Before deinstalling, check pkg_info output
