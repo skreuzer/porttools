@@ -54,7 +54,7 @@ install-docs:
 	${BSD_INSTALL_DATA} ${DOCS} ${DESTDIR}${DOCSDIR}
 
 clean:
-	rm -rf ${PROGRAMS} ${SCRIPTS}
+	rm -rf ${PROGRAMS} ${SCRIPTS} scripts/inc_header
 
 TODO: .todo Makefile
 	devtodo --filter -done,+children --TODO
