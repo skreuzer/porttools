@@ -34,8 +34,10 @@ all: ${PROGRAMS} ${SCRIPTS} Makefile
 .SUFFIXES: .in
 
 .in:
+	cp scripts/inc_header.in scripts/inc_header
+	sed -e 's/^/# /' LICENSE >> scripts/inc_header
 	sed -e 's%__VERSION__%${VERSIONSTRING}%;s,__PREFIX__,${PREFIX},' \
-		scripts/inc_header.in ${.IMPSRC} > ${.TARGET}
+		scripts/inc_header ${.IMPSRC} > ${.TARGET}
 	chmod a+x ${.TARGET}
 
 install: ${PROGRAMS} ${SCRIPTS}
