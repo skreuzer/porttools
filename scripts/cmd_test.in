@@ -169,7 +169,7 @@ do
 					sed -e "s,^,${PREFIX}/," | \
 					xargs ldd 2>&1 | \
 					grep -v "not a dynamic executable" | \
-						grep '=>' | awk '{print $3;}' | sort -u
+					grep '=>' | awk '{print $3;}' | sort -u
 			fi
 		fi
 	fi
@@ -185,6 +185,7 @@ do
 				sed -e "s,^${PREFIX}/,,"
 		fi
 		echo "===> Cleaning up"
+		[ ${SUDO} = "" ] && SUDO="sudo" # fix perms for build, stage, check-orphans 
 		[ "${USE_X_PREFIX}" != "yes" -a \
 		  "${PREFIX}" != "${LOCALBASE}" ] && ${SUDO} rm -rf ${PREFIX}
 		${SUDO} rm -rf ${PKG_DBDIR}
