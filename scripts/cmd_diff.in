@@ -23,12 +23,14 @@ Usage: port diff [-h] [-d <diff mode>]
 		SVN - against SVN
 		<dir> - against Ports tree in <dir>
 		<pattern> - against original port in <pwd><pattern>
+	-m <mode> - Override automatic mode selection:
+       new - generate SHAR as if the port was new.
 EOF
 }
 
 
 # Parse command line arguments
-ARGS=`/usr/bin/getopt hd: $*`
+ARGS=`/usr/bin/getopt hdm: $*`
 if [ $? != 0 ]
 then
 	echo "Error: invalid arguments"
@@ -49,6 +51,11 @@ do
 	# diff mode
 	-d)
 		DIFF_MODE=$2
+		shift
+		shift
+		;;
+	-m)
+		MODE=$2
 		shift
 		shift
 		;;
