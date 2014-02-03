@@ -29,16 +29,20 @@ BSD_INSTALL_DATA?=	install -m 444
 BSD_INSTALL_MAN?=	install -m 444
 
 # Targets
-all: ${PROGRAMS} ${SCRIPTS} Makefile
+all: pre-build ${PROGRAMS} ${SCRIPTS}
+
+pre-build:
+	@echo "Creating header include file..."
+	@cp scripts/inc_header.in scripts/inc_header
+	@sed -e 's/^/# /' LICENSE >> scripts/inc_header
 
 .SUFFIXES: .in
 
 .in:
-	cp scripts/inc_header.in scripts/inc_header
-	sed -e 's/^/# /' LICENSE >> scripts/inc_header
-	sed -e 's%__VERSION__%${VERSIONSTRING}%;s,__PREFIX__,${PREFIX},' \
+	@echo "Creating ${.TARGET}..."
+	@sed -e 's%__VERSION__%${VERSIONSTRING}%;s,__PREFIX__,${PREFIX},' \
 		scripts/inc_header ${.IMPSRC} > ${.TARGET}
-	chmod a+x ${.TARGET}
+	@chmod a+x ${.TARGET}
 
 install: ${PROGRAMS} ${SCRIPTS}
 	${BSD_INSTALL_SCRIPT} ${PROGRAMS} ${DESTDIR}${PREFIX}/bin
