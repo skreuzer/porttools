@@ -185,7 +185,7 @@ do
 				sed -e "s,^${PREFIX}/,,"
 		fi
 		echo "===> Cleaning up"
-		[ ${SUDO} = "" ] && SUDO="sudo" # fix perms for build, stage, check-orphans 
+		[ "${SUDO}" = "" ] && SUDO="sudo" # fix perms for build, stage, check-orphans 
 		[ "${USE_X_PREFIX}" != "yes" -a \
 		  "${PREFIX}" != "${LOCALBASE}" ] && ${SUDO} rm -rf ${PREFIX}
 		${SUDO} rm -rf ${PKG_DBDIR}
