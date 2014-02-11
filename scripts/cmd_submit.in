@@ -360,6 +360,7 @@ then
     echo "" >> ${PR_FORM}
     echo "SEND-PR: <Handy template to provide proof of cleanliness>" >> ${PR_FORM}
     echo "portlint: " >> ${PR_FORM}
+    echo "port test: " >> ${PR_FORM}
     echo "testport: " >> ${PR_FORM}
     echo "redports: " >> ${PR_FORM}
 fi
