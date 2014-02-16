@@ -68,7 +68,7 @@ else
 		fi
 	fi
 
-    #set variables regardless of mode
+	#set variables regardless of mode
 	PYTHON_SUFFIX="`make -V PYTHON_SUFFIX`"
 	RUBY_SUFFIX="`make -V RUBY_SUFFIX`"
 	PKGNAMEPREFIX="`make -V PKGNAMEPREFIX | sed -E "s,py${PYTHON_SUFFIX}-,py-," | sed -E "s,ruby${RUBY_SUFFIX}-,ruby-,"`"

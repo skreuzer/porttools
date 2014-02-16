@@ -24,7 +24,7 @@ Usage: port diff [-h] [-d <diff mode>]
 		<dir> - against Ports tree in <dir>
 		<pattern> - against original port in <pwd><pattern>
 	-m <mode> - Override automatic mode selection:
-       new - generate SHAR as if the port was new.
+		new - generate SHAR as if the port was new.
 EOF
 }
 

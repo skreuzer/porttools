@@ -153,7 +153,7 @@ do
 					grep -v "not a dynamic executable" | \
 					grep '=>' | awk '{print $3;}' | sort -u
 
-        else
+		else
 		# Before deinstalling, check pkg_info output
 			echo "===>  Checking pkg_info"
 			PKG_DBDIR=${PKG_DBDIR} pkg_info | grep ${PKGNAME}
