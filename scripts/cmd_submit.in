@@ -264,12 +264,7 @@ else
 		case ${MAINTAINER} in
 		# You are the port maintainer
 		${EMAIL})
-			if [ "${MODE}" = "update" ]
-			then
-				PREFIX="MAINTAINER-UPDATE"
-			else
-				PREFIX="MAINTAINER"
-			fi
+			PREFIX="MAINTAINER"
 			CLASS="maintainer-update"
 			;;
 		# CC port maintainer (unless it is ports@FreeBSD.org)
