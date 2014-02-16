@@ -116,6 +116,7 @@ Synopsis:
 .Ar diff
 .Op Fl h
 .Op Fl d Ar mode
+.Op Fl m Ar mode
 .Pp
 .Bl -tag -width ".Fl s Ar severity"
 .It Fl h
@@ -136,6 +137,10 @@ diff against original version of the port with specified directory
 (for example,
 .Pa .orig )
 in the parent directory.
+.It Fl m Ar mode
+Override automatic mode selection:
+.It Pa new
+generate SHAR as if the port was new
 .El
 .El
 .Pp
