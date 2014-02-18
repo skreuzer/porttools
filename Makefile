@@ -7,7 +7,7 @@
 
 # Package name and version
 PORTNAME?=	porttools
-PORTVERSION?=	1.00.2014.02.02
+PORTVERSION?=	1.00.2014.02.18
 DISTNAME?=	${PORTNAME}-${PORTVERSION}
 VERSIONSTRING=	${PORTVERSION}
 
@@ -28,13 +28,14 @@ BSD_INSTALL_SCRIPT?=	install -m 555
 BSD_INSTALL_DATA?=	install -m 444
 BSD_INSTALL_MAN?=	install -m 444
 
-# Targets
-all: pre-build ${PROGRAMS} ${SCRIPTS}
-
+#This is run explicitly from port makefile due to i386 "issues"
 pre-build:
 	@echo "Creating header include file..."
 	@cp scripts/inc_header.in scripts/inc_header
 	@sed -e 's/^/# /' LICENSE >> scripts/inc_header
+
+# Targets
+all: ${PROGRAMS} ${SCRIPTS}
 
 .SUFFIXES: .in
 
