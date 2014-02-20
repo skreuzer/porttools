@@ -14,7 +14,7 @@ fi
 
 DISTDIR="`make -V DISTDIR`"
 SUDO=""
-# See if sudo(1)
+# See if sudo(1) is needed
 [ ! -w ${DISTDIR} ] && SUDO="sudo"
 
 
