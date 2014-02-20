@@ -30,7 +30,7 @@ EOF
 
 
 # Parse command line arguments
-ARGS=`/usr/bin/getopt hdm: $*`
+ARGS=`/usr/bin/getopt hd:m: $*`
 if [ $? != 0 ]
 then
 	echo "Error: invalid arguments"
