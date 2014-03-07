@@ -12,8 +12,10 @@ DISTNAME?=	${PORTNAME}-${PORTVERSION}
 VERSIONSTRING=	${PORTVERSION}
 
 PROGRAMS=	scripts/port
-SCRIPTS=	scripts/cmd_commit scripts/cmd_create scripts/cmd_diff scripts/cmd_fetch scripts/cmd_getpr scripts/cmd_help \
-		scripts/cmd_install scripts/cmd_submit scripts/cmd_test scripts/cmd_upgrade scripts/util_diff
+SCRIPTS=	scripts/cmd_commit scripts/cmd_create scripts/cmd_diff \
+		scripts/cmd_fetch scripts/cmd_getpr scripts/cmd_help \
+		scripts/cmd_install scripts/cmd_submit scripts/cmd_test \
+		scripts/cmd_upgrade scripts/util_diff
 INC_HEADER=	scripts/inc_header
 DOCS=		LICENSE NEWS README THANKS
 MAN1=		man/port.1
