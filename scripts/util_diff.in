@@ -47,7 +47,14 @@ else
 		then
 			DIFF_MODE="SVN"
 		else
-			DIFF_MODE="${PORTSDIR}"
+            git status > /dev/null 2>&1
+            status=$?
+		    if [ $status -eq 0 ]
+		    then
+			    DIFF_MODE="GIT"
+		    else
+			    DIFF_MODE="${PORTSDIR}"
+            fi
 		fi
 		echo "Default diff mode is ${DIFF_MODE}"
 	elif [ "${DIFF_MODE}" = "SVN" ]
@@ -59,6 +66,26 @@ else
 		if [ $status -ne 0 ]
 		then
 			echo "Diff mode was set to ${DIFF_MODE}, but `pwd` is not a svn working copy."
+			echo -n "Trying ${PORTSDIR} ... "
+			if [ -d ${PORTSDIR} ]
+			then
+				DIFF_MODE="${PORTSDIR}"
+				echo "found"
+			else
+				echo "not found - please choose an approriate diff mode"
+				rm -rf ${TEMPROOT}
+				exit 1
+			fi
+		fi
+	elif [ "${DIFF_MODE}" = "GIT" ]
+	then
+		# If `pwd` is not a svn working copy
+		# fallback to diffing against ${PORTSDIR} tree
+		git status > /dev/null 2>&1
+		status=$?
+		if [ $status -ne 0 ]
+		then
+			echo "Diff mode was set to ${DIFF_MODE}, but `pwd` is not a git working copy."
 			echo -n "Trying ${PORTSDIR} ... "
 			if [ -d ${PORTSDIR} ]
 			then
@@ -94,6 +121,21 @@ else
 			exit 1
 		fi
 		DIFF_CMD="svn diff"
+	elif [ "${DIFF_MODE}" = "GIT" ]
+	then
+		DIFF_TYPE=${DIFF_MODE}
+
+		# Run 'git pull' first
+		echo "===> Updating from git"
+		git pull
+		status=$?
+		if [ $status -ne 0 ]
+		then
+			echo "Error updating git"
+			rm -rf ${TEMPROOT}
+			exit 1
+		fi
+		DIFF_CMD="git diff"
 	else 
 		# Non-SVN modes
 		DIRBASENAME=`basename \`pwd\``

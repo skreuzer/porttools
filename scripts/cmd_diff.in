@@ -21,6 +21,7 @@ Usage: port diff [-h] [-d <diff mode>]
 	-h	- Display this usage summary
 	-d <diff mode> - Select diff generation mode:
 		SVN - against SVN
+		GIT - against git
 		<dir> - against Ports tree in <dir>
 		<pattern> - against original port in <pwd><pattern>
 	-m <mode> - Override automatic mode selection:

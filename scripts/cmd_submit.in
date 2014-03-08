@@ -26,6 +26,7 @@ Usage:	port submit [-h] [-m <mode>] [-d <diff mode>]
 		update - updating a port to newer version
 	-d <diff mode> - Select diff generation mode:
 		SVN - against SVN
+		GIT - against git
 		<dir> - against Ports tree in <dir>
 		<pattern> - against original port in <pwd><pattern>
 	-s <severity> - Set PR's severity to <severity>
@@ -135,7 +136,7 @@ fi
 
 # util_diff will set
 # - PORTBASENAME if PORTNAME != port's directory name
-# - DIFF_TYPE to SVN, ports, or suffix
+# - DIFF_TYPE to SVN, GIT, ports, or suffix
 PORTBASENAME=""
 DIFF_TYPE=""
 
