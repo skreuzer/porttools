@@ -11,9 +11,13 @@ PORTVERSION?=	1.00.2014.02.18
 DISTNAME?=	${PORTNAME}-${PORTVERSION}
 VERSIONSTRING=	${PORTVERSION}
 
-PROGRAMS=	scripts/port
-SCRIPTS=	scripts/cmd_commit scripts/cmd_create scripts/cmd_diff scripts/cmd_fetch scripts/cmd_getpr scripts/cmd_help \
-		scripts/cmd_install scripts/cmd_submit scripts/cmd_test scripts/cmd_upgrade scripts/util_diff
+PROGRAM=	scripts/port
+SCRIPTS=	scripts/cmd_commit scripts/cmd_create scripts/cmd_diff \
+		scripts/cmd_fetch scripts/cmd_getpr scripts/cmd_help \
+		scripts/cmd_install scripts/cmd_submit scripts/cmd_test \
+		scripts/cmd_upgrade scripts/util_diff
+IN_FILES=	${SCRIPTS} ${PROGRAM}
+INC_HEADER=	scripts/inc_header
 DOCS=		LICENSE NEWS README THANKS
 MAN1=		man/port.1
 MAN5=		man/porttools.5
@@ -28,25 +32,25 @@ BSD_INSTALL_SCRIPT?=	install -m 555
 BSD_INSTALL_DATA?=	install -m 444
 BSD_INSTALL_MAN?=	install -m 444
 
+# Targets
+all: ${IN_FILES}
+
 #This is run explicitly from port makefile due to i386 "issues"
-pre-build:
+${INC_HEADER}: ${INC_HEADER}.in
 	@echo "Creating header include file..."
 	@cp scripts/inc_header.in scripts/inc_header
 	@sed -e 's/^/# /' LICENSE >> scripts/inc_header
 
-# Targets
-all: ${PROGRAMS} ${SCRIPTS}
-
 .SUFFIXES: .in
 
-.in:
+.in: ${INC_HEADER}
 	@echo "Creating ${.TARGET}..."
 	@sed -e 's%__VERSION__%${VERSIONSTRING}%;s,__PREFIX__,${PREFIX},' \
-		scripts/inc_header ${.IMPSRC} > ${.TARGET}
+		${INC_HEADER} ${.IMPSRC} > ${.TARGET}
 	@chmod a+x ${.TARGET}
 
-install: ${PROGRAMS} ${SCRIPTS}
-	${BSD_INSTALL_SCRIPT} ${PROGRAMS} ${DESTDIR}${PREFIX}/bin
+install: ${IN_FILES}
+	${BSD_INSTALL_SCRIPT} ${PROGRAM} ${DESTDIR}${PREFIX}/bin
 	mkdir -p ${DESTDIR}${DATADIR}
 	${BSD_INSTALL_SCRIPT} ${SCRIPTS} ${DESTDIR}${DATADIR}
 	mkdir -p ${DESTDIR}${MANPREFIX}/man/man1
@@ -59,7 +63,9 @@ install-docs:
 	${BSD_INSTALL_DATA} ${DOCS} ${DESTDIR}${DOCSDIR}
 
 clean:
-	rm -rf ${PROGRAMS} ${SCRIPTS} scripts/inc_header
+	rm -rf ${PROGRAM} ${SCRIPTS} scripts/inc_header
 
 TODO: .todo Makefile
 	devtodo --filter -done,+children --TODO
+
+.PHONY: all install install-docs clean TODO
