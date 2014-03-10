@@ -36,7 +36,7 @@ CLEAN_AFTER="yes"
 
 # Checking staging support in the port and abort if missing.
 NO_STAGE="`make -V NO_STAGE`"
-if [ "${NO_STAGE}" == "yes" ]
+if [ "${NO_STAGE}" = "yes" ]
 then
         echo "Error: ports without staging no longer supported"
         exit 1
