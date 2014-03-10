@@ -34,6 +34,14 @@ RUN_PORTLINT="yes"
 CLEAN_BEFORE="yes"
 CLEAN_AFTER="yes"
 
+# Checking staging support in the port and abort if missing.
+NO_STAGE="`make -V NO_STAGE`"
+if [ "${NO_STAGE}" == "yes" ]
+then
+        echo "Error: ports without staging no longer supported"
+        exit 1
+fi
+
 # Parse command line arguments
 ARGS=`/usr/bin/getopt hlLbipcC $*`
 if [ $? != 0 ]
