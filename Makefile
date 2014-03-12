@@ -7,15 +7,15 @@
 
 # Package name and version
 PORTNAME?=	porttools
-PORTVERSION?=	1.00.2014.03.09
+PORTVERSION?=	1.00.2014.03.12
 DISTNAME?=	${PORTNAME}-${PORTVERSION}
 VERSIONSTRING=	${PORTVERSION}
 
 PROGRAM=	scripts/port
 SCRIPTS=	scripts/cmd_commit scripts/cmd_create scripts/cmd_diff \
-		scripts/cmd_fetch scripts/cmd_getpr scripts/cmd_help \
-		scripts/cmd_install scripts/cmd_submit scripts/cmd_test \
-		scripts/cmd_upgrade scripts/util_diff
+		scripts/cmd_fetch scripts/cmd_followup scripts/cmd_getpr \
+		scripts/cmd_help scripts/cmd_install scripts/cmd_submit \
+		scripts/cmd_test scripts/cmd_upgrade scripts/util_diff
 IN_FILES=	${SCRIPTS} ${PROGRAM}
 INC_HEADER=	scripts/inc_header
 DOCS=		LICENSE NEWS README THANKS
@@ -26,7 +26,7 @@ MAN5=		man/porttools.5
 PREFIX?=	~/pkg
 DATADIR?=	${PREFIX}/share/${PORTNAME}
 DOCSDIR?=	${PREFIX}/share/doc/${PORTNAME}
-MANPREFIX?= ${PREFIX}/share
+MANPREFIX?= ${PREFIX}
 
 BSD_INSTALL_SCRIPT?=	install -m 555
 BSD_INSTALL_DATA?=	install -m 444
