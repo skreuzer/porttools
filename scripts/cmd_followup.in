@@ -130,7 +130,7 @@ if [ "${RUN_PORTLINT}" = "yes" ]
 then
 	echo "===> Validating port with portlint"
 	FLAGS="-${PORTLINT_FLAGS:-abt}"
-    PORTLINT_LOG="${TEMPROOT}/.portlint.out"
+	PORTLINT_LOG="${TEMPROOT}/.portlint.out"
 	[ "${COMMITTER}" = "yes" ] && FLAGS="${FLAGS} -c"
 	[ "${MODE}" = "new" ] && FLAGS="${FLAGS} -N"
 	if portlint ${FLAGS} > ${PORTLINT_LOG}
@@ -242,6 +242,8 @@ else
 	fi
 fi
 
+BOUNDARY=`date|md5sum`
+
 echo "===> Generating Followup form"
 PR_FORM="${TEMPROOT}/PR"
 cat > ${PR_FORM} <<- EOF
@@ -251,6 +253,14 @@ cat > ${PR_FORM} <<- EOF
 	Subject: Re: $SUBJECT
 	X-GNATS-Notify: 
 	X-porttools-version: __VERSION__
+	MIME-Version: 1.0
+	Content-Type: multipart/mixed; boundary="------${BOUNDARY}"
+
+
+	This is a multi-part message in MIME format.
+	--------${BOUNDARY}
+	Content-Type: text/plain; charset=utf-8; format=flowed
+	Content-Transfer-Encoding: 8bit
 
 
 	[DESCRIBE CHANGES]
@@ -298,7 +308,7 @@ then
 	echo "" >> ${PR_FORM}
 	echo "<Handy template to provide proof of cleanliness>" >> ${PR_FORM}
 	echo -n "portlint: " >> ${PR_FORM}
-    cat ${PORTLINT_LOG} >> ${PR_FORM}
+	cat ${PORTLINT_LOG} >> ${PR_FORM}
 	echo "port test: " >> ${PR_FORM}
 	echo "testport: " >> ${PR_FORM}
 	echo "redports: " >> ${PR_FORM}
@@ -307,56 +317,57 @@ fi
 cat >> ${PR_FORM} <<- EOF
 
 	Generated with FreeBSD Port Tools __VERSION__ (${MODESTRING})
+
+
 EOF
 
 # Attach diff to PR_FORM (taken from send-pr(1))
 if [ -e "${PATCH}" -a ! -d "${PATCH}" ]; then
 	PRETTY_NAME=`basename ${PATCH}`
-	if file $PATCH | grep "text" >/dev/null 2>/dev/null ; then
-		ATTACHED_FILES="${ATTACHED_FILES}
---- $PRETTY_NAME begins here ---
-`cat \"$PATCH\"`
---- $PRETTY_NAME ends here ---
-"
-	else
-	ATTACHED_FILES="$ATTACHED_FILES
-`uuencode \"$PRETTY_NAME\" < \"$PATCH\"`
-"
-	fi
+cat > ${PATCH}.att <<- EOF
+--------${BOUNDARY}
+Content-Type: text/plain; charset=utf-8;
+  name="${PRETTY_NAME}"
+Content-Transfer-Encoding: base64;
+Content-Disposition: attachment;
+  filename="${PRETTY_NAME}"
+
+`b64encode bitmessage-0.4.2.patch < "${PATCH}" | sed -e '/^begin-base64/d; /^====$/d'`
+
+--------${BOUNDARY}--
+
+EOF
+
 fi;
-[ -n "${ATTACHED_FILES}" ] && echo "${ATTACHED_FILES}" >> ${PR_FORM}
+
 
 # Invoke EDITOR
 if [ "${DRY_RUN}" != "yes" ]; then
 ${EDITOR} ${PR_FORM}
-fi
 
 # Invoke send-pr(1)
+	echo -n "s)end, e)dit or a)bort? $ECHON2"
+	while [ -z "$input" ]; do
+		read input
 
-
-
-echo -n "s)end, e)dit or a)bort? $ECHON2"
-while [ -z "$input" ]; do
-	read input
-
-	case "$input" in
-	a*)
-	   exit
-	   ;;
-	e*)
-	   ${EDITOR} ${PR_FORM}
-	   continue 2
-	   ;;
-	s*)
-		cat "${PR_FORM}" | if [ "$DRY_RUN" = "yes" ]; then cat; else 
-		echo "===> Invoking sendmail(8) to submit a PR"
-		/usr/sbin/sendmail -t -F "${FULLNAME}" -f "${EMAIL}"
-		fi
-	   break 2
-	   ;;
-	esac
-done
-
+		case "$input" in
+		a*)
+		   exit
+		   ;;
+		e*)
+		   ${EDITOR} ${PR_FORM}
+		   continue 2
+		   ;;
+		s*)
+			echo "===> Invoking sendmail(8) to submit a PR"
+			cat "${PR_FORM}" "${PATCH}.att" | /usr/sbin/sendmail -t -F "${FULLNAME}" -f "${EMAIL}"
+			break 2
+			;;
+		esac
+	done
+else
+	cat "${PR_FORM}" "${PATCH}.att" | ${DIFF_VIEWER}
+fi
 
 if [ $? -ne 0 ]
 then
