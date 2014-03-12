@@ -149,7 +149,7 @@ fi
 # Collect information about the port
 
 echo "===> Collecting info about PR $PR_NUMBER"
-SUBJECT=`curl -s "http://www.freebsd.org/cgi/query-pr.cgi?pr=${PR_NUMBER}" |sed -E '/title/!d; /head/!d; s/<[^>]*[>]//g'`
+SUBJECT=`fetch -qo - "http://www.freebsd.org/cgi/query-pr.cgi?pr=${PR_NUMBER}" |sed -E '/title/!d; /head/!d; s/<[^>]*[>]//g'`
 echo "===> Subject of PR $PR_NUMBER:"
 echo "$SUBJECT"
 
