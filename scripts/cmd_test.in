@@ -132,7 +132,7 @@ echo "===> flags: ${PORT_FLAGS}"
 if [ "${CLEAN_BEFORE}" = "yes" ]
 then
 	echo "===> Cleaning workspace before port test"
-	make clean
+	${SUDO} make clean
 	if [ "${USE_X_PREFIX}" != "yes" -a -d ${PREFIX} ] 
 	then
 		echo "===>  Removing existing ${PREFIX} dir"

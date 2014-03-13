@@ -76,6 +76,6 @@ echo "===> Viewing diff with ${DIFF_VIEWER}"
 ${DIFF_VIEWER} < ${PATCH}
 
 # Cleanup
-rm -rf ${TEMPROOT}
+cleanup
 echo "===> Done"
 exit 0

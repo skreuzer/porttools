@@ -35,7 +35,6 @@ Usage:	port followup [-h] [-m <mode>] [-d <diff mode>] [-L] [-n <PR number>]
 EOF
 }
 
-
 # Initialize arguments to the default values
 COMMITTER="no"
 RUN_PORTLINT="yes"
@@ -139,7 +138,7 @@ then
 	else
 		cat ${PORTLINT_LOG}
 		echo "Error validating port"
-		rm -rf ${TEMPROOT}
+		cleanup
 		exit 1
 	fi
 else
@@ -352,6 +351,7 @@ ${EDITOR} ${PR_FORM}
 
 		case "$input" in
 		a*)
+		   cleanup
 		   exit
 		   ;;
 		e*)
@@ -372,7 +372,7 @@ fi
 if [ $? -ne 0 ]
 then
 	echo "Error submitting Followup"
-	rm -rf ${TEMPROOT} 
+	cleanup
 	exit 1
 fi
 
@@ -380,10 +380,10 @@ echo "===> Saving submitted PR, cleaning up"
 # Cleanup
 if [ -n "${ARCHIVE_DIR}" -a -d ${ARCHIVE_DIR} -a "${DRY_RUN}" != "yes" ]
 then
-echo "===> Backing up submitted patch"
+	echo "===> Backing up submitted patch"
 	mv ${PATCH} ${ARCHIVE_DIR}
 fi
-rm -rf ${TEMPROOT}
+cleanup
 
 echo "===> Done"
 exit 0

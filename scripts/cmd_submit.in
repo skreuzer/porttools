@@ -156,7 +156,7 @@ then
 	else
 		cat ${TEMPROOT}/.portlint.out
 		echo "Error validating port"
-		rm -rf ${TEMPROOT}
+		cleanup
 		exit 1
 	fi
 else
@@ -379,7 +379,7 @@ if [ $? -ne 0 ]
 then
 	echo "Error submitting PR"
 	rm -f ${TMPDIR:-/tmp}/pbad.*
-	rm -rf ${TEMPROOT} 
+	cleanup
 	exit 1
 fi
 
@@ -387,9 +387,10 @@ fi
 echo "===> Saving submitted PR, cleaning up"
 if [ -n "${ARCHIVE_DIR}" -a -d ${ARCHIVE_DIR} ]
 then
+	echo "===> Backing up submitted patch"
 	mv ${PATCH} ${ARCHIVE_DIR}
 fi
-rm -rf ${TEMPROOT}
+cleanup
 
 echo "===> Done"
 exit 0
