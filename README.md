@@ -11,6 +11,7 @@ FreeBSD Port Tools consist of the several small scripts run from
 - `port create`: create a new port from a template
 - `port diff`: generate a diff against a previous version of the port
 - `port fetch`: fetch distfile(s) of a new version of the port
+- `port followup`: followup on a PR with change/update
 - `port getpr`: get patch/shar from a PR
 - `port help`: display usage summary for `port(1)` commands
 - `port install`: install a port
@@ -72,8 +73,16 @@ Let me give a quick overview:
    xmj@mx12:~/ports/ipsvd% port submit
 ```
 
-Now, this was a very simple case, and it did not show off all the features 
-of the Port Tools, so please check `port(1)` manual page for details.
+6. Sometimes things need work after submitting. Here's where I use followup to
+   submit the patches. It has the neat feature of automatically obtaining the
+   right subject line from the PR number supplied as argument.
+
+```
+   port followup -n <PR #>
+```
+
+Now, this interview consists of a few very simple cases, and it did not show off
+all the features of the Port Tools, so please check `port(1)` manual page for details.
  
 Thanks
 ------
