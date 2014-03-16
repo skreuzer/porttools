@@ -31,7 +31,7 @@ build_template ()
 	echo "" >> ${PR_FORM}
 	echo "[PORTTOOLS: Handy template]" >> ${PR_FORM}
 	echo -n "portlint: " >> ${PR_FORM}
-	if [ "${RUN_PORTLINT}" = "yes"]; then
+	if [ "${RUN_PORTLINT}" = "yes" ]; then
 		cat ${PORTLINT_LOG} >> ${PR_FORM}
 	else
 		echo "ok" >> ${PR_FORM}
@@ -45,7 +45,8 @@ leftover_check ()
 {
 	echo "===> Checking for leftovers"
 	grep "\[PORTTOOLS:" $PR_FORM  >/dev/null && LEFTOVERS="1" || LEFTOVERS="0"
-	[ "${LEFTOVERS}" == "1" ] && echo "Found leftovers. Aborting submission..." && cleanup && exit 1 || echo "No leftovers, proceeding...."
+	[ "${LEFTOVERS}" == "1" ] && echo "Found leftovers. Aborting submission..." \
+    && cleanup && exit 1 || echo "No leftovers, proceeding...."
 }
 
 
