@@ -26,6 +26,28 @@ cleanup ()
 	echo "====> Cleaning up"
 	rm -rf ${TEMPROOT}
 }
+build_template ()
+{
+	echo "" >> ${PR_FORM}
+	echo "[PORTTOOLS: Handy template]" >> ${PR_FORM}
+	echo -n "portlint: " >> ${PR_FORM}
+	if [ "${RUN_PORTLINT}" = "yes"]; then
+		cat ${PORTLINT_LOG} >> ${PR_FORM}
+	else
+		echo "ok" >> ${PR_FORM}
+	fi
+	echo "port test: " >> ${PR_FORM}
+	echo "testport: " >> ${PR_FORM}
+	echo "redports: " >> ${PR_FORM}
+}
+
+leftover_check ()
+{
+	echo "===> Checking for leftovers"
+	grep "\[PORTTOOLS:" $PR_FORM  >/dev/null && LEFTOVERS="1" || LEFTOVERS="0"
+	[ "${LEFTOVERS}" == "1" ] && echo "Found leftovers. Aborting submission..." && cleanup && exit 1 || echo "No leftovers, proceeding...."
+}
+
 
 if [ "${MODE}" = "new" ]
 then
@@ -85,7 +107,7 @@ else
 		fi
 	elif [ "${DIFF_MODE}" = "GIT" ]
 	then
-		# If `pwd` is not a svn working copy
+		# If `pwd` is not a git working copy
 		# fallback to diffing against ${PORTSDIR} tree
 		git status > /dev/null 2>&1
 		status=$?

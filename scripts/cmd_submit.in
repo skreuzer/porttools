@@ -22,7 +22,7 @@ Usage:	port submit [-h] [-m <mode>] [-d <diff mode>]
 	-h	- Display this usage summary
 	-m <mode> - Override automatic mode selection:
 		new - submitting new port
-		change - changing a port 
+		change - changing a port
 		update - updating a port to newer version
 	-d <diff mode> - Select diff generation mode:
 		SVN - against SVN
@@ -148,13 +148,14 @@ if [ "${RUN_PORTLINT}" = "yes" ]
 then
 	echo "===> Validating port with portlint"
 	FLAGS="-${PORTLINT_FLAGS:-abt}"
+	PORTLINT_LOG="${TEMPROOT}/.portlint.out"
 	[ "${COMMITTER}" = "yes" ] && FLAGS="${FLAGS} -c"
 	[ "${MODE}" = "new" ] && FLAGS="${FLAGS} -N"
-	if portlint ${FLAGS} > ${TEMPROOT}/.portlint.out
+	if portlint ${FLAGS} > ${PORTLINT_LOG}
 	then
-		cat ${TEMPROOT}/.portlint.out
+		cat ${PORTLINT_LOG}
 	else
-		cat ${TEMPROOT}/.portlint.out
+		cat ${PORTLINT_LOG}
 		echo "Error validating port"
 		cleanup
 		exit 1
@@ -165,7 +166,7 @@ fi
 
 # Collect information about the port
 
-# The following section comes from util_diff. 
+# The following section comes from util_diff.
 # For port submit to work with python/ruby ports and GNATS auto-assign, version
 # numbers need to be sed'ed out before adding to synopsis.
 
@@ -221,8 +222,8 @@ else
 	# Set PR parameters based on selected mode
 	CLASS="change-request"
 	PREFIX="PATCH"
-	SUFFIX="[SUMMARIZE CHANGES]"
-	DESCRIPTION="[DESCRIBE CHANGES]"
+	SUFFIX="[PORTTOOLS: SUMMARIZE CHANGES]"
+	DESCRIPTION="[PORTTOOLS: DESCRIBE CHANGES]"
 
 	if [ "${MODE}" = "update" ]
 	then
@@ -255,7 +256,7 @@ else
 			esac
 
 			# CC previous port maintainer,
-			# unless it was unmaintained 
+			# unless it was unmaintained
 			if [ "${OLD_MAINTAINER}" != "ports@FreeBSD.org" ]; then
 				CC="${OLD_MAINTAINER}"
 			fi
@@ -298,13 +299,13 @@ cat > ${PR_FORM} <<- EOF
 	>Submitter-Id:	current-users
 	>Originator:	${FULLNAME}
 	>Organization:	${ORGANIZATION}
-	>Confidential:	no 
+	>Confidential:	no
 	>Synopsis:	${SYNOPSIS}
 	>Severity:	${SEVERITY}
 	SEND-PR:	[ non-critical | serious | critical ]
 	>Priority:	${PRIORITY}
 	SEND-PR:	[ low | medium | high ]
-	>Category:	ports 
+	>Category:	ports
 	SEND-PR: <choose from the list of categories below (one line)>
 	SEND-PR: advocacy	alpha	amd64		arm			bin			conf
 	SEND-PR: docs		gnu		i386		ia64 		java 		kern
@@ -357,12 +358,7 @@ fi
 
 if [ "${COMMITTER}" = "yes" ]
 then
-	echo "" >> ${PR_FORM}
-	echo "SEND-PR: <Handy template to provide proof of cleanliness>" >> ${PR_FORM}
-	echo "portlint: " >> ${PR_FORM}
-	echo "port test: " >> ${PR_FORM}
-	echo "testport: " >> ${PR_FORM}
-	echo "redports: " >> ${PR_FORM}
+	build_template
 fi
 
 cat >> ${PR_FORM} <<- EOF
