@@ -54,7 +54,7 @@ if [ "${MODE}" = "new" ]
 then
 	# Generate shar file with new port
 	echo "===> Creating shar file"
-	PKGNAME="`make -V PKGNAME`'
+	PKGNAME="`make -V PKGNAME`"
 	PATCH="${TEMPROOT}/${PKGNAME}.shar"
 	SAVE_CWD="`pwd`"
 	DIR="`basename ${SAVE_CWD}`"
