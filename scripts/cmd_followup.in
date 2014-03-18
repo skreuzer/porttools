@@ -334,7 +334,12 @@ Content-Transfer-Encoding: base64;
 Content-Disposition: attachment;
   filename="${PRETTY_NAME}"
 
-`b64encode bitmessage-0.4.2.patch < "${PATCH}" | sed -e '/^begin-base64/d; /^====$/d'`
+`if [ "${DRY_RUN}" != "yes" ]; then
+	b64encode ${PRETTY_NAME} < "${PATCH}" | sed -e '/^begin-base64/d; /^====$/d'
+else
+	cat < ${PATCH}
+fi`
+
 
 --------${BOUNDARY}--
 
