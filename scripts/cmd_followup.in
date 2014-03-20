@@ -181,7 +181,7 @@ COMMENT="`make -V COMMENT`"
 RELEASE="`uname -srp`"
 SYSTEM="`uname -a | cut -d ' ' -f 1-12`"
 
-CC=""
+CC_ADD=""
 if [ "${MODE}" = "new" ]
 then
 	# Submitting a new port
@@ -234,18 +234,23 @@ else
 			# CC previous port maintainer,
 			# unless it was unmaintained 
 			if [ "${OLD_MAINTAINER}" != "ports@FreeBSD.org" ]; then
-				CC="${OLD_MAINTAINER}"
+				CC_ADD="${OLD_MAINTAINER}"
 			fi
 		fi
 	else
-		[ "${MAINTAINER}" != "ports@FreeBSD.org" ] && CC="${MAINTAINER}"
+		[ "${MAINTAINER}" != "ports@FreeBSD.org" ] && CC_ADD="${MAINTAINER}"
 	fi
 fi
 
 if [ "x${RESPONSIBLE}" != "x" -a "${MAINTAINER}" != "${RESPONSIBLE}@FreeBSD.org" ]; then
-	CC="${CC}; ${RESPONSIBLE}@freebsd.org"
+	CC_ADD="${CC_ADD}; ${RESPONSIBLE}@freebsd.org"
 elif [ "x${RESPONSIBLE}" != "x" ]; then
-	CC="${CC}"
+	CC_ADD="${CC_ADD}"
+fi
+
+if [ -n "${CC_ADD}" ]
+then
+	CC="${CC}, ${CC_ADD}"
 fi
 
 BOUNDARY=`date|md5sum`
@@ -256,6 +261,7 @@ cat > ${PR_FORM} <<- EOF
 	From: ${FULLNAME} <${EMAIL}>
 	To: bug-followup@freebsd.org
 	Cc: ${CC}
+	Bcc: ${BCC}
 	Subject: Re: $SUBJECT
 	X-GNATS-Notify: 
 	X-porttools-version: __VERSION__
@@ -301,13 +307,13 @@ else
 		done
 	fi
 
-	if [ "${CC}" != "" ]
+	if [ "${CC_ADD}" != "" ]
 	then
 		echo >> ${PR_FORM}
 		if [ "x${RESPONSIBLE}" != "x" -a "${MAINTAINER}" != "${RESPONSIBLE}@FreeBSD.org" ]; then
-			echo "Port maintainer and responsible committer (${CC}) are cc'd." >> ${PR_FORM}
+			echo "Port maintainer and responsible committer (${CC_ADD}) are cc'd." >> ${PR_FORM}
 		else
-			echo "Port maintainer (${CC}) is cc'd." >> ${PR_FORM}
+			echo "Port maintainer (${CC_ADD}) is cc'd." >> ${PR_FORM}
 		fi
 	fi
 fi

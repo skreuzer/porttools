@@ -17,6 +17,8 @@ then
 	EMAIL="${USER}@`hostname`"
 	FULLNAME="`pw usershow -n ${USER} | cut -d: -f8`"
 	ORGANIZATION=""
+	BCC=""
+	CC=""
 	BUILDROOT="/tmp"
 	ARCHIVE_DIR=""
 	DIFF_MODE="SVN"
