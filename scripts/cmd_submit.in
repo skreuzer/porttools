@@ -194,7 +194,8 @@ COMMENT="`make -V COMMENT`"
 RELEASE="`uname -srp`"
 SYSTEM="`uname -a | cut -d ' ' -f 1-12`"
 
-CC_ADD=""
+CC_ORIGINAL="$CC"
+CC=""
 if [ "${MODE}" = "new" ]
 then
 	# Submitting a new port
@@ -258,7 +259,7 @@ else
 			# CC previous port maintainer,
 			# unless it was unmaintained
 			if [ "${OLD_MAINTAINER}" != "ports@FreeBSD.org" ]; then
-				CC_ADD="${OLD_MAINTAINER}"
+				CC="${OLD_MAINTAINER}"
 			fi
 		fi
 	else
@@ -271,15 +272,15 @@ else
 			;;
 		# CC port maintainer (unless it is ports@FreeBSD.org)
 		*)
-			[ "${MAINTAINER}" != "ports@FreeBSD.org" ] && CC_ADD="${MAINTAINER}"
+			[ "${MAINTAINER}" != "ports@FreeBSD.org" ] && CC="${MAINTAINER}"
 			;;
 		esac
 	fi
 fi
 
-if [ -n "${CC_ADD}" ]
+if [ -n "${CC_ORIGINAL}" ]
 then
-	CC="${CC}, ${CC_ADD}"
+	CC_ALL="${CC_ORIGINAL}, ${CC}"
 fi
 
 # Generate Synopsis line
@@ -297,7 +298,7 @@ cat > ${PR_FORM} <<- EOF
 	To: FreeBSD-gnats-submit@freebsd.org
 	From: ${FULLNAME} <${EMAIL}>
 	Bcc: ${BCC}
-	Cc: ${CC}
+	Cc: ${CC_ALL}
 	X-send-pr-version: 3.113
 	X-GNATS-Notify: 
 
@@ -355,10 +356,10 @@ else
 		done
 	fi
 
-	if [ "${CC_ADD}" != "" ]
+	if [ "${CC}" != "" ]
 	then
 		echo >> ${PR_FORM}
-		echo "Port maintainer (${CC_ADD}) is cc'd." >> ${PR_FORM}
+		echo "Port maintainer (${CC}) is cc'd." >> ${PR_FORM}
 	fi
 fi
 

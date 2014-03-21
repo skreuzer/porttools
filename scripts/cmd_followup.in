@@ -181,7 +181,8 @@ COMMENT="`make -V COMMENT`"
 RELEASE="`uname -srp`"
 SYSTEM="`uname -a | cut -d ' ' -f 1-12`"
 
-CC_ADD=""
+CC_ORIGINAL="$CC"
+CC=""
 if [ "${MODE}" = "new" ]
 then
 	# Submitting a new port
@@ -234,23 +235,23 @@ else
 			# CC previous port maintainer,
 			# unless it was unmaintained 
 			if [ "${OLD_MAINTAINER}" != "ports@FreeBSD.org" ]; then
-				CC_ADD="${OLD_MAINTAINER}"
+				CC="${OLD_MAINTAINER}"
 			fi
 		fi
 	else
-		[ "${MAINTAINER}" != "ports@FreeBSD.org" ] && CC_ADD="${MAINTAINER}"
+		[ "${MAINTAINER}" != "ports@FreeBSD.org" ] && CC="${MAINTAINER}"
 	fi
 fi
 
 if [ "x${RESPONSIBLE}" != "x" -a "${MAINTAINER}" != "${RESPONSIBLE}@FreeBSD.org" ]; then
-	CC_ADD="${CC_ADD}; ${RESPONSIBLE}@freebsd.org"
+	CC="${CC}; ${RESPONSIBLE}@freebsd.org"
 elif [ "x${RESPONSIBLE}" != "x" ]; then
-	CC_ADD="${CC_ADD}"
+	CC="${CC}"
 fi
 
-if [ -n "${CC_ADD}" ]
+if [ -n "${CC_ORIGINAL}" ]
 then
-	CC="${CC}, ${CC_ADD}"
+	CC_ALL="${CC_ORIGINAL}, ${CC}"
 fi
 
 BOUNDARY=`date|md5sum`
@@ -260,7 +261,7 @@ PR_FORM="${TEMPROOT}/PR"
 cat > ${PR_FORM} <<- EOF
 	From: ${FULLNAME} <${EMAIL}>
 	To: bug-followup@freebsd.org
-	Cc: ${CC}
+	Cc: ${CC_ALL}
 	Bcc: ${BCC}
 	Subject: Re: $SUBJECT
 	X-GNATS-Notify: 
@@ -307,13 +308,13 @@ else
 		done
 	fi
 
-	if [ "${CC_ADD}" != "" ]
+	if [ "${CC}" != "" ]
 	then
 		echo >> ${PR_FORM}
 		if [ "x${RESPONSIBLE}" != "x" -a "${MAINTAINER}" != "${RESPONSIBLE}@FreeBSD.org" ]; then
-			echo "Port maintainer and responsible committer (${CC_ADD}) are cc'd." >> ${PR_FORM}
+			echo "Port maintainer and responsible committer (${CC}) are cc'd." >> ${PR_FORM}
 		else
-			echo "Port maintainer (${CC_ADD}) is cc'd." >> ${PR_FORM}
+			echo "Port maintainer (${CC}) is cc'd." >> ${PR_FORM}
 		fi
 	fi
 fi
