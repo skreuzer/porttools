@@ -194,6 +194,7 @@ COMMENT="`make -V COMMENT`"
 RELEASE="`uname -srp`"
 SYSTEM="`uname -a | cut -d ' ' -f 1-12`"
 
+CC_ORIGINAL="$CC"
 CC=""
 if [ "${MODE}" = "new" ]
 then
@@ -277,6 +278,13 @@ else
 	fi
 fi
 
+if [ -n "${CC_ORIGINAL}" ]
+then
+	CC_ALL="${CC_ORIGINAL}, ${CC}"
+else
+	CC_ALL="${CC}"
+fi
+
 # Generate Synopsis line
 if [ -z "${PORTBASENAME}" ]
 then
@@ -291,7 +299,8 @@ cat > ${PR_FORM} <<- EOF
 	SEND-PR: -*- send-pr -*-
 	To: FreeBSD-gnats-submit@freebsd.org
 	From: ${FULLNAME} <${EMAIL}>
-	Cc: ${CC}
+	Bcc: ${BCC}
+	Cc: ${CC_ALL}
 	X-send-pr-version: 3.113
 	X-GNATS-Notify: 
 

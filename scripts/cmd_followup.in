@@ -181,6 +181,7 @@ COMMENT="`make -V COMMENT`"
 RELEASE="`uname -srp`"
 SYSTEM="`uname -a | cut -d ' ' -f 1-12`"
 
+CC_ORIGINAL="$CC"
 CC=""
 if [ "${MODE}" = "new" ]
 then
@@ -248,6 +249,13 @@ elif [ "x${RESPONSIBLE}" != "x" ]; then
 	CC="${CC}"
 fi
 
+if [ -n "${CC_ORIGINAL}" ]
+then
+	CC_ALL="${CC_ORIGINAL}, ${CC}"
+else
+	CC_ALL="${CC}"
+fi
+
 BOUNDARY=`date|md5sum`
 
 echo "===> Generating Followup form"
@@ -255,7 +263,8 @@ PR_FORM="${TEMPROOT}/PR"
 cat > ${PR_FORM} <<- EOF
 	From: ${FULLNAME} <${EMAIL}>
 	To: bug-followup@freebsd.org
-	Cc: ${CC}
+	Cc: ${CC_ALL}
+	Bcc: ${BCC}
 	Subject: Re: $SUBJECT
 	X-GNATS-Notify: 
 	X-porttools-version: __VERSION__
