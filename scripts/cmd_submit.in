@@ -281,6 +281,8 @@ fi
 if [ -n "${CC_ORIGINAL}" ]
 then
 	CC_ALL="${CC_ORIGINAL}, ${CC}"
+else
+	CC_ALL="${CC}"
 fi
 
 # Generate Synopsis line
