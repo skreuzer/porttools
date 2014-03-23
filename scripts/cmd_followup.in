@@ -21,7 +21,7 @@ Usage:	port followup [-h] [-m <mode>] [-d <diff mode>] [-L] [-n <PR number>]
 	-h	- Display this usage summary
 	-m <mode> - Override automatic mode selection:
 		new - submitting new port
-		change - changing a port 
+		change - changing a port
 		update - updating a port to newer version
 	-d <diff mode> - Select diff generation mode:
 		SVN - against SVN
@@ -81,7 +81,7 @@ do
 		;;
 	# PR number
 	-n)
-		PR_NUMBER=$2
+		PR_NUMBER="`echo $2 | tr -d '[:alpha:]\/'`"
 		shift
 		;;
 	# committer mode
@@ -101,7 +101,7 @@ do
 done
 
 # First, find if there's a PR number.
-if [ "x$PR_NUMBER" == "x" ] 
+if [ "x$PR_NUMBER" == "x" ]
 then
 	echo "Error: Empty PR number"
 	usage
@@ -148,18 +148,20 @@ fi
 # Collect information about the port
 
 echo "===> Collecting info about PR $PR_NUMBER"
-SUBJECT=`fetch -qo - "http://www.freebsd.org/cgi/query-pr.cgi?pr=${PR_NUMBER}" |sed -E '/title/!d; /head/!d; s/<[^>]*[>]//g'`
-RESPONSIBLE=`fetch -qo - "http://www.freebsd.org/cgi/query-pr.cgi?pr=${PR_NUMBER}" |sed -E '/Responsible/!d; s/<[^>]*[>]/ /g; s/.*Responsible: //g; s/State: .*//' |tr -d " "`
+QUERY_PR_URL="http://www.freebsd.org/cgi/query-pr.cgi?pr=${PR_NUMBER}"
+QUERY_PR="`fetch -qo - "${QUERY_PR_URL}"`"
+SUBJECT=`echo "$QUERY_PR" | sed -E '/title/!d; /head/!d; s/<[^>]*[>]//g'`
+RESPONSIBLE=`echo $QUERY_PR | sed -E '/Responsible/!d; s/<[^>]*[>]/ /g; s/.*Responsible: //g; s/State: .*//' |tr -d " "`
 echo "===> Subject of PR $PR_NUMBER:"
 echo "$SUBJECT"
 
-# The following section comes from util_diff. 
+# The following section comes from util_diff.
 # For port submit to work with python/ruby ports and GNATS auto-assign, version
 # numbers need to be sed'ed out before adding to synopsis.
 
 PYTHON_SUFFIX="`make -V PYTHON_SUFFIX`"
 RUBY_SUFFIX="`make -V RUBY_SUFFIX`"
-PKGNAMEPREFIX="`make -V PKGNAMEPREFIX | sed -E "s,py${PYTHON_SUFFIX}-,py-," | sed -E "s,ruby${RUBY_SUFFIX}-,ruby-,"`"
+PKGNAMEPREFIX="`make -V PKGNAMEPREFIX | sed -E 's,py${PYTHON_SUFFIX}-,py-,' | sed -E 's,ruby${RUBY_SUFFIX}-,ruby-,'`"
 PKGNAMESUFFIX="`make -V PKGNAMESUFFIX`"
 PORTNAME="${PKGNAMEPREFIX}`make -V PORTNAME`${PKGNAMESUFFIX}"
 
@@ -233,7 +235,7 @@ else
 			esac
 
 			# CC previous port maintainer,
-			# unless it was unmaintained 
+			# unless it was unmaintained
 			if [ "${OLD_MAINTAINER}" != "ports@FreeBSD.org" ]; then
 				CC="${OLD_MAINTAINER}"
 			fi
@@ -243,10 +245,14 @@ else
 	fi
 fi
 
-if [ "x${RESPONSIBLE}" != "x" -a "${MAINTAINER}" != "${RESPONSIBLE}@FreeBSD.org" ]; then
+# If CC is set, check if maintainer is responsible. If not, CC both.
+if [ "x${CC}" != "x" -a "x${RESPONSIBLE}" != "x" -a "${MAINTAINER}" != "${RESPONSIBLE}@FreeBSD.org" ]; then
 	CC="${CC}; ${RESPONSIBLE}@freebsd.org"
+# All other cases go to responsible only.
 elif [ "x${RESPONSIBLE}" != "x" ]; then
-	CC="${CC}"
+	CC="${RESPONSIBLE}@FreeBSD.org"
+else
+	echo "Something weird happened. ${RESPONSIBLE} and ${MAINTAINER} but no CC."
 fi
 
 if [ -n "${CC_ORIGINAL}" ]
@@ -310,16 +316,22 @@ else
 		done
 	fi
 
-	if [ "${CC}" != "" ]
-	then
-		echo >> ${PR_FORM}
-		if [ "x${RESPONSIBLE}" != "x" -a "${MAINTAINER}" != "${RESPONSIBLE}@FreeBSD.org" ]; then
-			echo "Port maintainer and responsible committer (${CC}) are cc'd." >> ${PR_FORM}
-		else
-			echo "Port maintainer (${CC}) is cc'd." >> ${PR_FORM}
-		fi
+fi
+
+
+if [ "${CC}" != "" ]
+then
+	echo >> ${PR_FORM}
+	if [ "x${RESPONSIBLE}" != "x" -a ! -n "${MAINTAINER}" -a "${MAINTAINER}" != "${RESPONSIBLE}@FreeBSD.org" ]; then
+		echo "${MAINTAINER}" >> ${PR_FORM}
+		echo "Port maintainer and responsible committer (${CC}) are cc'd." >> ${PR_FORM}
+	elif [ "x${RESPONSIBLE}" != "x" ]; then
+		echo "Responsible committer (${CC}) is cc'd." >> ${PR_FORM}
+	else
+		echo "Port maintainer (${CC}) is cc'd." >> ${PR_FORM}
 	fi
 fi
+
 if [ "${COMMITTER}" = "yes" ]
 then
 	build_template
