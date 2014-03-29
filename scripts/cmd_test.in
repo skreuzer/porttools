@@ -12,6 +12,14 @@ then
 	exit 1
 fi
 
+# Use ports tree configured in ~/.porttools
+if [ -d "${PORTSDIR}" ]
+then
+	export PORTSDIR=${PORTSDIR}
+	echo "===> Using ports tree ${PORTSDIR}"
+fi
+
+
 # Usage
 usage ()
 {
@@ -38,8 +46,8 @@ CLEAN_AFTER="yes"
 NO_STAGE="`make -V NO_STAGE`"
 if [ "${NO_STAGE}" = "yes" ]
 then
-        echo "Error: ports without staging no longer supported"
-        exit 1
+	echo "Error: ports without staging no longer supported"
+	exit 1
 fi
 
 # Parse command line arguments
@@ -88,13 +96,6 @@ do
 	esac
 	shift
 done
-
-# Use ports tree configured in ~/.porttools
-if [ -d "${PORTSDIR}" ]
-then
-	export PORTSDIR=${PORTSDIR}
-    echo "===> Using ports tree ${PORTSDIR}"
-fi
 
 # Run portlint(1) to validate port's sanity
 if [ "${RUN_PORTLINT}" = "yes" ]
