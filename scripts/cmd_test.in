@@ -89,6 +89,13 @@ do
 	shift
 done
 
+# Use ports tree configured in ~/.porttools
+if [ -d "${PORTSDIR}" ]
+then
+	export PORTSDIR=${PORTSDIR}
+    echo "===> Using ports tree ${PORTSDIR}"
+fi
+
 # Run portlint(1) to validate port's sanity
 if [ "${RUN_PORTLINT}" = "yes" ]
 then
@@ -125,7 +132,6 @@ then
 fi
 
 # Display FLAGS
-[ -d "${PORTSDIR}" ] && export PORTSDIR=${PORTSDIR}
 PORT_FLAGS="PREFIX=${PREFIX} NO_DEPENDS=yes PKG_DBDIR=${PKG_DBDIR} PORTSDIR=${PORTSDIR} $*"
 echo "===> flags: ${PORT_FLAGS}"
 
