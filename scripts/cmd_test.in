@@ -125,7 +125,8 @@ then
 fi
 
 # Display FLAGS
-PORT_FLAGS="PREFIX=${PREFIX} NO_DEPENDS=yes PKG_DBDIR=${PKG_DBDIR} $*"
+[ -d "${PORTSDIR}" ] && export PORTSDIR=${PORTSDIR}
+PORT_FLAGS="PREFIX=${PREFIX} NO_DEPENDS=yes PKG_DBDIR=${PKG_DBDIR} PORTSDIR=${PORTSDIR} $*"
 echo "===> flags: ${PORT_FLAGS}"
 
 # Start with a clean workspace
