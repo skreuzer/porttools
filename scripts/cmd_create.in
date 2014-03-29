@@ -17,7 +17,49 @@ if [ "`which newfile`" = "" ]; then
 	exit 1
 fi
 
-PORTNAME=$1
+usage ()
+{
+cat << EOF
+FreeBSD Port Tools __VERSION__
+Usage: port create [-h] [-a <author>] [-e <email>] <portname>
+	-h	- Display this usage summary
+	-a	- Override author name set in ~/.porttools
+	-e	- Override email set in ~/.porttools
+EOF
+}
+
+ARGS=`/usr/bin/getopt h:a:e: $*`
+if [ $? != 0 ]
+then
+	echo "Error: invalid arguments"
+	usage
+	exit 2
+fi
+
+set -- $ARGS
+while [ x"$1" != x"--" -a x"$1" != x"" ]
+do
+	i=$1
+	case "$i" in
+	# help
+	-h)
+		usage
+		exit 0
+		;;
+	-a)
+		FULLNAME=$2
+		shift
+		;;
+	-e)
+		EMAIL=$2
+		shift
+		;;
+		
+	esac
+    shift
+done
+
+PORTNAME=$2
 # Check if port name was supplied
 if [ "${PORTNAME}" = "" ]; then
 	echo "Error: port name not specified"
@@ -32,3 +74,9 @@ fi
 
 # Run newfile(1)
 newfile --author="${FULLNAME}" --email="${EMAIL}" -pport."${PORTNAME}"
+if [ $? != 0 ]
+then
+	echo "Could not create port ${PORTNAME}"
+else
+	echo "===> Port ${PORTNAME} successfully created."
+fi
