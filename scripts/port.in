@@ -28,10 +28,16 @@ then
 	EOF
 fi
 
-PORTSDIR="/usr/ports"
+if [ -z "$PORTSDIR" ]; then
+	PORTSDIR="/usr/ports"
+else
+	PORTSDIR_OVERRIDE="$PORTSDIR"
+fi
 
 # Reading configuration file
 . ${PORTTOOLS}
+
+[ ! -z "$PORTSDIR_OVERRIDE" ] && export PORTSDIR="$PORTSDIR_OVERRIDE"
 
 # Port Tools scripts location
 SCRIPT_DIR="__PREFIX__/share/porttools"
