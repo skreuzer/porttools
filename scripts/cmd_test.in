@@ -229,7 +229,7 @@ fi
 if [ "${CLEAN_AFTER}" = "yes" ]
 then
 	echo "===> Cleaning up after port test"
-	${SUDO} make clean
+	${SUDO} make ${PORT_FLAGS} clean
 	if [ "${USE_X_PREFIX}" != "yes" -a -d ${PREFIX} ] 
 	then
 		echo "===>  Removing existing ${PREFIX} dir"
