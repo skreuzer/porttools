@@ -44,9 +44,9 @@ build_template ()
 leftover_check ()
 {
 	echo "===> Checking for leftovers"
-	grep "\[PORTTOOLS:" $PR_FORM  >/dev/null && LEFTOVERS="1" || LEFTOVERS="0"
+	grep "\[PORTTOOLS:" $PR_FORM >/dev/null && LEFTOVERS="1" || LEFTOVERS="0"
 	[ "${LEFTOVERS}" == "1" ] && echo "Found leftovers. Aborting submission..." \
-    && cleanup && exit 1 || echo "No leftovers, proceeding...."
+		&& cleanup && exit 1 || echo "No leftovers, proceeding...."
 }
 
 
@@ -73,18 +73,18 @@ else
 	then
 		svn info > /dev/null 2>&1
 		status=$?
-		if [ $status -eq 0 ]
+		if [ $status -eq 0 ];
 		then
 			DIFF_MODE="SVN"
 		else
-            git status > /dev/null 2>&1
-            status=$?
-		    if [ $status -eq 0 ]
-		    then
-			    DIFF_MODE="GIT"
-		    else
-			    DIFF_MODE="${PORTSDIR}"
-            fi
+			git status > /dev/null 2>&1
+			status=$?
+			if [ $status -eq 0 ]
+			then
+				DIFF_MODE="GIT"
+			else
+				DIFF_MODE="${PORTSDIR}"
+			fi
 		fi
 		echo "Default diff mode is ${DIFF_MODE}"
 	elif [ "${DIFF_MODE}" = "SVN" ]
@@ -166,7 +166,7 @@ else
 			exit 1
 		fi
 		DIFF_CMD="git diff"
-	else 
+	else
 		# Non-SVN modes
 		DIRBASENAME=`basename \`pwd\``
 		PORTBASENAME_HEADER=`sed -n -E -e '1,/^($|[^#].*$)|\\$FreeBSD\:/s%^#.*\\$FreeBSD\:[[:space:]]*([^/]+/)*([^/]+)/Makefile.*\\$%\2%p' Makefile`
@@ -196,7 +196,7 @@ else
 				fi
 				[ -d ${ORIG_DIR} ] && echo "Using ${ORIG_DIR} instead"
 			fi
-		else 
+		else
 			# -d <pattern> have been specified
 			# <pattern> is used to determine original port location
 			DIFF_TYPE="suffix"
@@ -208,7 +208,7 @@ else
 			fi
 		fi
 
-		# Check to see if the original version of port exist 
+		# Check to see if the original version of port exists
 		if [ ! -d ${ORIG_DIR} ]
 		then
 			echo "Original version does not exist at ${ORIG_DIR}"

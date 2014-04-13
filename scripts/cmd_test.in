@@ -129,7 +129,7 @@ then
 	# Some ports fail to build if PREFIX contains commas 
 	# (mostly due to constructs like "sed -e 's,foo,bar'")
 	# or plus signs - replace them with underscore
-	PREFIX="${BUILDROOT:-/tmp}/`echo ${PKGNAME} | tr  '[,+]' _`"
+	PREFIX="${BUILDROOT:-/tmp}/`echo ${PKGNAME} | tr '[,+]' _`"
 fi
 
 # Display FLAGS
@@ -197,13 +197,13 @@ do
 		then
 			echo "===> Files currently installed in PREFIX"
 			test -d ${PREFIX} && find ${PREFIX} ! -type d | \
-				egrep -v "${PREFIX}/share/nls/(POSIX|en_US.US-ASCII)"  | \
+				egrep -v "${PREFIX}/share/nls/(POSIX|en_US.US-ASCII)" | \
 				sed -e "s,^${PREFIX}/,,"
 		fi
 		echo "===> Cleaning up"
 		[ "${SUDO}" = "" ] && SUDO="sudo" # fix perms for build, stage, check-orphans 
 		[ "${USE_X_PREFIX}" != "yes" -a \
-		  "${PREFIX}" != "${LOCALBASE}" ] && ${SUDO} rm -rf ${PREFIX}
+			"${PREFIX}" != "${LOCALBASE}" ] && ${SUDO} rm -rf ${PREFIX}
 		${SUDO} rm -rf ${PKG_DBDIR}
 		exit 1
 	fi
@@ -218,7 +218,7 @@ then
 	# Remove PREFIX from the extra files list
 	# XXX Dirty hack to hide these 2 files that always show up
 	find ${PREFIX} ! -type d | \
-		egrep -v "${PREFIX}/share/nls/(POSIX|en_US.US-ASCII)"  | \
+		egrep -v "${PREFIX}/share/nls/(POSIX|en_US.US-ASCII)" | \
 		sed -e "s,^${PREFIX}/,,"
 	${SUDO} find ${LOCALBASE}/ -type d | sed "s,^${LOCALBASE}/,," | sort > ${PREFIX}.PLIST_DIRS.before
 	${SUDO} find ${PREFIX}/ -type d | sed "s,^${PREFIX}/,," | sort > ${PREFIX}.PLIST_DIRS.after
