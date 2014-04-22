@@ -15,7 +15,7 @@ fi
 PR=$1
 
 # Get PR
-MAILHOST="`echo ${EMAIL} | sed -e 's/.*@//'`"
+MAILHOST="`echo ${EMAIL} | sed -e 's/.*@//' | tr '[:upper:]' '[:lower:]'`"
 if [ "${MAILHOST}" = "freebsd.org" ]
 then
 	COMMITTER="`echo ${EMAIL} | sed -e 's/@.*//'`"
