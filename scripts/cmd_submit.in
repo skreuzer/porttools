@@ -297,7 +297,7 @@ echo "===> Generating PR form"
 PR_FORM="${TEMPROOT}/PR"
 cat > ${PR_FORM} <<- EOF
 	SEND-PR: -*- send-pr -*-
-	To: FreeBSD-gnats-submit@freebsd.org
+	To: FreeBSD-gnats-submit@FreeBSD.org
 	From: ${FULLNAME} <${EMAIL}>
 	Bcc: ${BCC}
 	Cc: ${CC_ALL}

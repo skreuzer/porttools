@@ -21,8 +21,8 @@ then
 	COMMITTER="`echo ${EMAIL} | sed -e 's/@.*//'`"
 	ssh ${COMMITTER}@freefall.FreeBSD.org query-pr -F ${PR} > ${PR}
 else
-	echo "You need ssh privs on freefall.freebsd.org to access getpr."
-	echo "Please set your EMAIL to user@freebsd.org in ~/.porttools"
+	echo "You need ssh privs on freefall.FreeBSD.org to access getpr."
+	echo "Please set your EMAIL to user@FreeBSD.org in ~/.porttools"
 fi
 
 echo "===> Done"
