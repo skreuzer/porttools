@@ -262,7 +262,7 @@ else
 	CC_ALL="${CC}"
 fi
 
-BOUNDARY=`date|md5sum`
+BOUNDARY=`date|md5`
 
 echo "===> Generating Followup form"
 PR_FORM="${TEMPROOT}/PR"

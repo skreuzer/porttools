@@ -168,6 +168,7 @@ else
 		DIFF_CMD="git diff"
 	else
 		# Non-SVN modes
+		# FIXME: these two checks should really exist for all VCS
 		DIRBASENAME=`basename \`pwd\``
 		PORTBASENAME_HEADER=`sed -n -E -e '1,/^($|[^#].*$)|\\$FreeBSD\:/s%^#.*\\$FreeBSD\:[[:space:]]*([^/]+/)*([^/]+)/Makefile.*\\$%\2%p' Makefile`
 		if [ "${DIRBASENAME}" != "${PORTBASENAME_HEADER}" ]
