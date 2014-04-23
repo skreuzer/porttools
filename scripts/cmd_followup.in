@@ -247,7 +247,7 @@ fi
 
 # If CC is set, check if maintainer is responsible. If not, CC both.
 if [ "x${CC}" != "x" -a "x${RESPONSIBLE}" != "x" -a "${MAINTAINER}" != "${RESPONSIBLE}@FreeBSD.org" ]; then
-	CC="${CC}; ${RESPONSIBLE}@freebsd.org"
+	CC="${CC}; ${RESPONSIBLE}@FreeBSD.org"
 # All other cases go to responsible only.
 elif [ "x${RESPONSIBLE}" != "x" ]; then
 	CC="${RESPONSIBLE}@FreeBSD.org"
@@ -268,7 +268,7 @@ echo "===> Generating Followup form"
 PR_FORM="${TEMPROOT}/PR"
 cat > ${PR_FORM} <<- EOF
 	From: ${FULLNAME} <${EMAIL}>
-	To: bug-followup@freebsd.org
+	To: bug-followup@FreeBSD.org
 	Cc: ${CC_ALL}
 	Bcc: ${BCC}
 	Subject: Re: $SUBJECT
