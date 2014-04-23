@@ -414,7 +414,7 @@ fi
 
 echo "===> Saving submitted PR, cleaning up"
 # Cleanup
-if [ -n "${ARCHIVE_DIR}" -a -d ${ARCHIVE_DIR} -a "${DRY_RUN}" != "yes" ]
+if [ -n "${ARCHIVE_DIR}" -a -d "${ARCHIVE_DIR}" -a "${DRY_RUN}" != "yes" ]
 then
 	echo "===> Backing up submitted patch"
 	mv ${PATCH} ${ARCHIVE_DIR}
