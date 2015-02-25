@@ -1,9 +1,9 @@
 0.99.20140202:
 - Include patches from svn://svn.freebsd.org/ports/head/ports-mgmt/porttools/files/*
-  in original files, open github repository. 
+  in original files, open github repository.
 
 0.99, 2009-09-09
-- bugfix: Fix commandline arguments handling for some cases when two or more 
+- bugfix: Fix commandline arguments handling for some cases when two or more
   flags are used - e.g. `port submit -m update -d .orig` (PR: ports/100771,
   thanks HASHI Hiroaki and Dmitry Marakasov)
 - optimization: add -R flag to cvs(1) invocation in port diff - this would
@@ -60,7 +60,7 @@
 
 0.60, 2004-07-29
 - add: port submit: new option: -c (committer check): adds "-c" to portlint(1)
-  flags when checking the port for sanity before submitting 
+  flags when checking the port for sanity before submitting
   (previously "-c" was always added - could cause problems with recent
   portlint versions)
 - change: port test: change portlint(1) flags from "-abct" to "-abt"
@@ -83,14 +83,14 @@
 - change: port submit: extend functionality of added/deleted files
   detection to work in non-CVS mode, too - patch provided by Sergey
   Matveychuk (thanks!); closes #995048
-- bugfix: port submit: fix update and change maintainer detection 
+- bugfix: port submit: fix update and change maintainer detection
   by properly escape awk regexp (thanks, Sergey!)
 
 0.50, 2003-10-20
-- new: change command-line interface: now all scripts are run via 
+- new: change command-line interface: now all scripts are run via
   port(1) front-end
 - new: "plug-in" command scripts, located in ${PREFIX}/share/porttools
-- new: commands: 
+- new: commands:
 	- create - creates new port directory from a template
 	- diff - generate a diff (in the same way as "port submit" would)
 	- fetch - fetch a new version of the port
@@ -102,7 +102,7 @@
   (tested only with CVS diff mode)
 - new: port submit: add option (-L) to skip running portlint (thanks, Sergey!)
 - change: testport: renamed to port test
-- change: port test: filter out share/nls/{POSIX,en_US.US-ASCII} from extra 
+- change: port test: filter out share/nls/{POSIX,en_US.US-ASCII} from extra
   files check (should really be fixed in the mtree)
 - change: pr-new.1, pr-change.1, pr-update.1, and testport.1 were merged into
   single manual page - port.1
@@ -116,10 +116,10 @@
 - change: THANKS: added a new contributor (Remi)
 
 0.25, 2003-08-01
-- new: pr-update and friends now allow non-CVS diff generation: 
+- new: pr-update and friends now allow non-CVS diff generation:
        -d <diffmode> flag (thanks, Jens and Sergey!)
 - bugfix: fixed incorrect config file name in manpages (thanks, Lars!)
-- change: testport and pr-update now print more detailed usage 
+- change: testport and pr-update now print more detailed usage
           if -h option is given
 - change: added new contributors to THANKS
 

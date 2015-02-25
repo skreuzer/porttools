@@ -36,7 +36,7 @@
 .Op options
 .Sh DESCRIPTION
 .Nm
-simplifies testing and submitting Problem Reports (PRs) 
+simplifies testing and submitting Problem Reports (PRs)
 with a new FreeBSD port, or change/update to an existing ports.
 .Pp
 .Nm
@@ -52,7 +52,7 @@ generate diff against original port version
 .It Ar fetch
 fetch distfile(s) of new port version
 .It Ar help
-display summary for 
+display summary for
 .Nm
 commands
 .It Ar submit
@@ -77,7 +77,7 @@ Synopsis:
 .Pp
 .Bl -tag -width ".Fl s Ar severity"
 .It Ar name
-name of port to create. 
+name of port to create.
 Generates an error if a file or directory with this name already exists
 in the current directory.
 .El
@@ -96,20 +96,20 @@ and corresponding
 files.
 .It Ar diff
 Generates
-.Xr shar 1 
+.Xr shar 1
 file (for new ports)
-or patch file in unified 
-.Xr diff 1 
+or patch file in unified
+.Xr diff 1
 format against original port (for changes or updates),
 suitable for submitting as PR.
 .Pp
-Generated file then passed to the viewer specified in 
-.Pa ~/.porttools 
+Generated file then passed to the viewer specified in
+.Pa ~/.porttools
 configuration file.
-Default viewer is 
-.Xr cdiff 1 
+Default viewer is
+.Xr cdiff 1
 if present,
-otherwise - 
+otherwise -
 .Xr more 1 .
 .Pp
 Synopsis:
@@ -150,10 +150,10 @@ Example:
 .Pp
 .Dl % port diff -d SVN
 .Pp
-This would generate unified diff of modified checked-out working copy 
+This would generate unified diff of modified checked-out working copy
 of the port against SVN repo.
 .It Ar fetch
-Fetch one or more distfiles of new or updated port version 
+Fetch one or more distfiles of new or updated port version
 and updates checksums.
 It is a shortcut for typing the following at the shell prompt:
 .Pp
@@ -167,7 +167,7 @@ Synopsis:
 Accepts no additional arguments.
 .Pp
 .It Ar help
-Displays summary for 
+Displays summary for
 .Nm
 commands by dynamically scanning command scripts located in
 .Pa ${PREFIX}/share/porttools .
@@ -183,18 +183,18 @@ Accepts no additional arguments.
 Submits PR with new port, or changed or updated port.
 .Pp
 Run this command from a directory containing the new port.
-First, it executes 
+First, it executes
 .Xr portlint 1
 (unless
 .Fl L
-option was specified) 
+option was specified)
 to verify the port files for correctness,
-then it automatically detects mode - new, change or update 
+then it automatically detects mode - new, change or update
 (unless overridden by
 .Fl m Ar mode
 option),
 generates either a
-.Xr shar 1 
+.Xr shar 1
 file (for new ports)
 or patch file in unified
 .Xr diff 1
@@ -203,10 +203,10 @@ This file is named according to port's name and version.
 .Pp
 Finally, it prepares PR for submittal via
 .Xr send-pr 1
-by automatically filling in most of the fields in the standard form, 
+by automatically filling in most of the fields in the standard form,
 attaching the generated shar or patch file to the PR.
-If the PR submittal was successful, 
-shar/patch file could be optionally saved to ${ARCHIVE_DIR} 
+If the PR submittal was successful,
+shar/patch file could be optionally saved to ${ARCHIVE_DIR}
 if that variable is defined and points to a writable directory.
 .Pp
 Synopsis:
@@ -240,7 +240,7 @@ Valid values are:
 .Em non-critical ,
 .Em serious ,
 .Em critical .
-Default is 
+Default is
 .Em non-critical .
 .It Fl p Ar priority
 Sets priority of the PR.
@@ -248,7 +248,7 @@ Valid values are:
 .Em low ,
 .Em medium ,
 .Em high .
-Default is 
+Default is
 .Em low .
 .It Fl L
 Skips running
@@ -260,41 +260,41 @@ Just print to stdout (see -P in
 .Xr send-pr 1) .
 .El
 .It Ar test
-Automates the process of testing a new port (or a port update) 
+Automates the process of testing a new port (or a port update)
 by going through the steps recommended by the FreeBSD Porter's Handbook:
 .Bl -dash -compact
-.It 
-build 
-.It 
+.It
+build
+.It
 install
-.It 
+.It
 package
-.It 
+.It
 deinstall
 .El
 .Pp
 Note: build phase can be run under a regular user account,
-all others require root privileges, so 
+all others require root privileges, so
 .Nm
 automatically invokes
 .Em Xr sudo 1 .
 .Pp
 The command stops if any errors are encountered during the process.
 .Pp
-To avoid interfering with the ports already installed on the build host, 
-.Ev PREFIX 
+To avoid interfering with the ports already installed on the build host,
+.Ev PREFIX
 variable is set so the installation is done to a directory inside
-.Ev BUILDROOT 
-.Pq e.g. Pa /tmp/${PKGNAME} , 
-and 
+.Ev BUILDROOT
+.Pq e.g. Pa /tmp/${PKGNAME} ,
+and
 .Ev PKG_DBDIR
-points to a temporary package database 
+points to a temporary package database
 .Pq e.g. Pa /tmp/pkg_db.xxxxxxx .
 This allows to test an update to a port already
 installed on the build system (same or previous version).
 .Pp
-This command also detects and lists any files not listed in 
-.Pa pkg-plist 
+This command also detects and lists any files not listed in
+.Pa pkg-plist
 during
 .Sq Extra files check
 phase.
@@ -312,7 +312,7 @@ Synopsis:
 display usage summary for this command.
 .It Fl l
 Run
-.Em Xr portlint 1 
+.Em Xr portlint 1
 only.
 .It Fl L
 Do not run
@@ -345,7 +345,7 @@ This command may be used to manually examine the installed files for correctness
 .Pp
 .Dl % testport -- NOPORTDOCS=yes
 .Pp
-Tests port without installing documentation 
+Tests port without installing documentation
 (i.e. pass NOPORTDOCS=yes to all make phases).
 Note: you can list as many port knobs/parameters as needed.
 .Pp

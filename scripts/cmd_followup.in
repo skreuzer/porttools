@@ -275,7 +275,7 @@ cat > ${PR_FORM} <<- EOF
 	Cc: ${CC_ALL}
 	Bcc: ${BCC}
 	Subject: Re: $SUBJECT
-	X-GNATS-Notify: 
+	X-GNATS-Notify:
 	X-porttools-version: __VERSION__
 	MIME-Version: 1.0
 	Content-Type: multipart/mixed; boundary="------${BOUNDARY}"
@@ -301,8 +301,8 @@ else
 
 	if [ -n "${FILES_ADD}" ]
 	then
-		echo "" >> ${PR_FORM}	
-		echo "Added file(s):" >> ${PR_FORM}	
+		echo "" >> ${PR_FORM}
+		echo "Added file(s):" >> ${PR_FORM}
 		for file in ${FILES_ADD}
 		do
 			echo "- ${file}" >> ${PR_FORM}
@@ -311,8 +311,8 @@ else
 
 	if [ -n "${FILES_DEL}" ]
 	then
-		echo "" >> ${PR_FORM}	
-		echo "Removed file(s):" >> ${PR_FORM}	
+		echo "" >> ${PR_FORM}
+		echo "Removed file(s):" >> ${PR_FORM}
 		for file in ${FILES_DEL}
 		do
 			echo "- ${file}" >> ${PR_FORM}

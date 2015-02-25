@@ -28,7 +28,7 @@ Usage
 
 Let us assume you are interested in helping out with one of the ports.
 The most convenient way of doing that with the Port Tools is the following.
-Even though the Port Tools have 3 most of diff generation, the recommended is 
+Even though the Port Tools have 3 most of diff generation, the recommended is
 SVN (default). Do not be scared away at this point - it is very simple.
 Let me give a quick overview:
 
@@ -53,7 +53,7 @@ Let me give a quick overview:
 ```
 
 3. At this moment we need to fetch the new distfile and run `make makesum`
-   to update the distinfo file. There is even simpler way to accomplish this 
+   to update the distinfo file. There is even simpler way to accomplish this
    with the Port Tools version `0.50` or later:
 
 ```
@@ -66,7 +66,7 @@ Let me give a quick overview:
    xmj@mx12:~/ports/ipsvd% port test
 ```
 
-5. Once I am satisfied with the results, let us submit a PR 
+5. Once I am satisfied with the results, let us submit a PR
    with the port update:
 
 ```
@@ -83,7 +83,7 @@ Let me give a quick overview:
 
 Now, this interview consists of a few very simple cases, and it did not show off
 all the features of the Port Tools, so please check `port(1)` manual page for details.
- 
+
 Thanks
 ------
 Several people have contributed ideas and/or code to the FreeBSD Port Tools,

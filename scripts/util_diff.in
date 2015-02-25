@@ -216,7 +216,7 @@ else
 			cleanup
 			exit 1
 		fi
-		
+
 		DIFF_CMD="diff -ruN ${ORIG_DIR} ."
 	fi
 
