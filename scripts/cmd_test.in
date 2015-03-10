@@ -83,10 +83,10 @@ do
 	-p) 	# stop after package phase
 		STOP="package"
 		;;
-	-c)	# Do NOT clean before 
+	-c)	# Do NOT clean before
 		CLEAN_BEFORE="no"
 		;;
-	-C)	# Do NOT clean after 
+	-C)	# Do NOT clean after
 		CLEAN_AFTER="no"
 		;;
 	--)	# End of option list
@@ -126,7 +126,7 @@ USE_X_PREFIX="`make -V USE_X_PREFIX`"
 PREFIX="`make -V PREFIX`"
 if [ "${USE_X_PREFIX}" != "yes" ]
 then
-	# Some ports fail to build if PREFIX contains commas 
+	# Some ports fail to build if PREFIX contains commas
 	# (mostly due to constructs like "sed -e 's,foo,bar'")
 	# or plus signs - replace them with underscore
 	PREFIX="${BUILDROOT:-/tmp}/`echo ${PKGNAME} | tr '[,+]' _`"
@@ -141,7 +141,7 @@ if [ "${CLEAN_BEFORE}" = "yes" ]
 then
 	echo "===> Cleaning workspace before port test"
 	${SUDO} make clean
-	if [ "${USE_X_PREFIX}" != "yes" -a -d ${PREFIX} ] 
+	if [ "${USE_X_PREFIX}" != "yes" -a -d ${PREFIX} ]
 	then
 		echo "===>  Removing existing ${PREFIX} dir"
  		[ "${PREFIX}" != "${LOCALBASE}" ] && ${SUDO} rm -rf ${PREFIX}
@@ -201,7 +201,7 @@ do
 				sed -e "s,^${PREFIX}/,,"
 		fi
 		echo "===> Cleaning up"
-		[ "${SUDO}" = "" ] && SUDO="sudo" # fix perms for build, stage, check-orphans 
+		[ "${SUDO}" = "" ] && SUDO="sudo" # fix perms for build, stage, check-orphans
 		[ "${USE_X_PREFIX}" != "yes" -a \
 			"${PREFIX}" != "${LOCALBASE}" ] && ${SUDO} rm -rf ${PREFIX}
 		${SUDO} rm -rf ${PKG_DBDIR}
@@ -230,7 +230,7 @@ if [ "${CLEAN_AFTER}" = "yes" ]
 then
 	echo "===> Cleaning up after port test"
 	${SUDO} make ${PORT_FLAGS} clean
-	if [ "${USE_X_PREFIX}" != "yes" -a -d ${PREFIX} ] 
+	if [ "${USE_X_PREFIX}" != "yes" -a -d ${PREFIX} ]
 	then
 		echo "===>  Removing existing ${PREFIX} dir"
  		[ "${PREFIX}" != "${LOCALBASE}" ] && ${SUDO} rm -rf ${PREFIX} ${PREFIX}.PLIST_DIRS.before ${PREFIX}.PLIST_DIRS.after

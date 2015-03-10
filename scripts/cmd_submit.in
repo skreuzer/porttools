@@ -305,7 +305,7 @@ cat > ${PR_FORM} <<- EOF
 	Bcc: ${BCC}
 	Cc: ${CC_ALL}
 	X-send-pr-version: 3.113
-	X-GNATS-Notify: 
+	X-GNATS-Notify:
 
 
 	>Submitter-Id:	current-users
@@ -343,8 +343,8 @@ else
 
 	if [ -n "${FILES_ADD}" ]
 	then
-		echo "" >> ${PR_FORM}	
-		echo "Added file(s):" >> ${PR_FORM}	
+		echo "" >> ${PR_FORM}
+		echo "Added file(s):" >> ${PR_FORM}
 		for file in ${FILES_ADD}
 		do
 			echo "- ${file}" >> ${PR_FORM}
@@ -353,8 +353,8 @@ else
 
 	if [ -n "${FILES_DEL}" ]
 	then
-		echo "" >> ${PR_FORM}	
-		echo "Removed file(s):" >> ${PR_FORM}	
+		echo "" >> ${PR_FORM}
+		echo "Removed file(s):" >> ${PR_FORM}
 		for file in ${FILES_DEL}
 		do
 			echo "- ${file}" >> ${PR_FORM}

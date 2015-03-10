@@ -1,7 +1,7 @@
 # cmd_create
 # Module for port(1)
 # SUMMARY: create new port from template using newfile(1)
-# 
+#
 # $Id: cmd_create.in,v 1.4 2006/05/06 11:29:59 skolobov Exp $
 #
 

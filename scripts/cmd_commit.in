@@ -17,7 +17,7 @@ usage ()
 {
 cat << EOF
 FreeBSD Port Tools __VERSION__
-Usage:	port commit [-h] 
+Usage:	port commit [-h]
 	-h	- Display this usage summary
 EOF
 }
@@ -103,7 +103,7 @@ else
 
 		ANSWER="n"
 		while true
-		do	
+		do
 			echo '============================================='
 			cat ${MSG}
 			echo '============================================='
@@ -111,11 +111,11 @@ else
 			[ "${ANSWER}" = "y" ] && break
 			${VISUAL:-vi} ${MSG}
 		done
-	fi 
+	fi
 	# Commit the port update
 	echo "===> Committing port update"
 	svn commit ${FLAGS}
-	
+
 fi
 # Remove SVN message file only if commit was successful
 [ $? -eq 0 -a -e ${MSG} ] && rm ${MSG}
