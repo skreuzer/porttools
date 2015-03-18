@@ -61,9 +61,9 @@ install: ${IN_FILES}
 	mkdir -p ${DESTDIR}${MANPREFIX}/man/man5
 	${BSD_INSTALL_MAN} ${MAN5} ${DESTDIR}${MANPREFIX}/man/man5
 
-	mkdir -p ${TMPLDIR}
+	mkdir -p ${DESTDIR}${TMPLDIR}
 	cd ${TEMPLATES} && find . | \
-		cpio -pdm ${TMPLDIR}
+		cpio -pdm ${DESTDIR}${TMPLDIR}
 
 install-docs:
 	mkdir -p ${DESTDIR}${DOCSDIR}
