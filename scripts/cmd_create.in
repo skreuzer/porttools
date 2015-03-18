@@ -112,7 +112,6 @@ case ${PORTPREFIX} in
 	py)
 		CATEGORIES=python
 		WWW=http://pypi.python.org/pypi/${PORTNAME}/
-		WANT_PKG_PLIST=Y
 		;;
 	*)
 		WWW=http://example.com
