@@ -23,7 +23,7 @@ MAN1=		man/port.1
 MAN5=		man/porttools.5
 
 # Normally provided via bsd.port.mk infrastructure
-PREFIX?=	~/pkg
+PREFIX?=	${HOME}/pkg
 DATADIR?=	${PREFIX}/share/${PORTNAME}
 DOCSDIR?=	${PREFIX}/share/doc/${PORTNAME}
 MANPREFIX?= ${PREFIX}
@@ -50,6 +50,7 @@ ${INC_HEADER}: ${INC_HEADER}.in
 	@chmod a+x ${.TARGET}
 
 install: ${IN_FILES}
+	mkdir -p ${DESTDIR}${PREFIX}/bin
 	${BSD_INSTALL_SCRIPT} ${PROGRAM} ${DESTDIR}${PREFIX}/bin
 	mkdir -p ${DESTDIR}${DATADIR}
 	${BSD_INSTALL_SCRIPT} ${SCRIPTS} ${DESTDIR}${DATADIR}
