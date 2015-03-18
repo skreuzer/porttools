@@ -41,6 +41,7 @@ fi
 
 # Port Tools scripts location
 SCRIPT_DIR="__PREFIX__/share/porttools"
+TEMPLATE_DIR="${SCRIPT_DIR}/tmpl"
 
 # Run specified command
 CMD="$1"
