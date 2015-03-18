@@ -11,12 +11,6 @@ if [ "${PORTTOOLS}" = "" ]; then
 	exit 1
 fi
 
-# Check to see if newfile(1) exists in PATH
-if [ "`which newfile`" = "" ]; then
-	echo "newfile(1) not found - please install devel/newfile port"
-	exit 1
-fi
-
 usage ()
 {
 cat << EOF
@@ -58,24 +52,84 @@ do
 	shift
 done
 
-PORTNAME=$2
+TEMPLATE_PREFIX=default
+ARG_PORTNAME=$2
 # Check if port name was supplied
-if [ "${PORTNAME}" = "" ]; then
+if [ "${ARG_PORTNAME}" = "" ]; then
 	echo "Error: port name not specified"
 	exit 1
 fi
 
 # Check if specified dir already exist
-if [ -e "${PORTNAME}" ]; then
-	echo "Error: ${PORTNAME} already exists"
+if [ -e "${ARG_PORTNAME}" ]; then
+	echo "Error: ${ARG_PORTNAME} already exists"
 	exit 1
+else
+	mkdir -p ${ARG_PORTNAME}
 fi
 
-# Run newfile(1)
-newfile --author="${FULLNAME}" --email="${EMAIL}" -pport."${PORTNAME}"
-if [ $? != 0 ]
+PORTBASE=$(basename ${ARG_PORTNAME})
+PORTPREFIX=$(echo ${PORTBASE} | cut -d- -f1)
+
+# Work around the fact that R modules are
+# prefixed with R-cran
+if [ "${PORTPREFIX}" = 'R' ]
 then
-	echo "Could not create port ${PORTNAME}"
-else
-	echo "===> Port ${PORTNAME} successfully created."
+	SECONDPORTPREFIX=$(echo ${PORTBASE} | cut -d- -f2)
+	if [ "${SECONDPORTPREFIX}" = 'cran' ]
+	then
+		PORTPREFIX="R-cran"
+	fi
 fi
+
+if [ ! -z ${PORTPREFIX} ]
+then
+	# Change the location of the port template files to
+	# use from default to the port prefix
+    TEMPLATE_PREFIX=${PORTPREFIX}
+
+	# Strip the port prefix from PORTNAME
+	PORTNAME=$(echo ${PORTBASE} | sed "s|${PORTPREFIX}-||")
+else
+	PORTNAME=${PORTBASE}
+fi
+
+case ${PORTPREFIX} in
+	p5)
+		CATEGORIES=perl5
+		MASTER_SITES=CPAN
+		PKGNAMEPREFIX=p5-
+		WWW=http://search.cpan.org/dist/${PORTNAME}/
+		WANT_PKG_PLIST=Y
+		;;
+	R-cran)
+		WWW=http://cran.r-project.org/web/${PORTNAME}/
+		;;
+	pear)
+		CATEGORIES=pear
+		WWW=http://pear.php.net/package/${PORTNAME}/
+		;;
+	py)
+		CATEGORIES=python
+		WWW=http://pypi.python.org/pypi/${PORTNAME}/
+		;;
+	*)
+		WWW=http://example.com
+		WANT_PKG_PLIST=Y
+		;;
+esac
+
+if [ ! -z ${WANT_PKG_PLIST} ]
+then
+	cp ${TEMPLATE_DIR}/common/pkg-plist.tmpl ${ARG_PORTNAME}/pkg-plist
+fi
+
+# Create pkg-descr
+sed "s|%%WWW%%|${WWW}|" < ${TEMPLATE_DIR}/common/pkg-descr.tmpl > ${ARG_PORTNAME}/pkg-descr
+
+# Create Makefile
+sed "s|%%PORTNAME%%|${PORTNAME}|g;
+	s|%%CATEGORIES%%|${CATEGORIES}|g;
+	s|%%MASTER_SITES%%|${MASTER_SITES}|g;
+	s|%%FULLNAME%%|${FULLNAME}|g;
+	s|%%EMAIL%%|${EMAIL}|g;" < ${TEMPLATE_DIR}/${TEMPLATE_PREFIX}/Makefile.tmpl > ${ARG_PORTNAME}/Makefile

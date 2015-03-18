@@ -19,6 +19,7 @@ SCRIPTS=	scripts/cmd_commit scripts/cmd_create scripts/cmd_diff \
 IN_FILES=	${SCRIPTS} ${PROGRAM}
 INC_HEADER=	scripts/inc_header
 DOCS=		LICENSE NEWS README THANKS
+TEMPLATES=	tmpl
 MAN1=		man/port.1
 MAN5=		man/porttools.5
 
@@ -26,6 +27,7 @@ MAN5=		man/porttools.5
 PREFIX?=	${HOME}/pkg
 DATADIR?=	${PREFIX}/share/${PORTNAME}
 DOCSDIR?=	${PREFIX}/share/doc/${PORTNAME}
+TMPLDIR=	${PREFIX}/share/${PORTNAME}/tmpl
 MANPREFIX?= ${PREFIX}
 
 BSD_INSTALL_SCRIPT?=	install -m 555
@@ -58,6 +60,10 @@ install: ${IN_FILES}
 	${BSD_INSTALL_MAN} ${MAN1} ${DESTDIR}${MANPREFIX}/man/man1
 	mkdir -p ${DESTDIR}${MANPREFIX}/man/man5
 	${BSD_INSTALL_MAN} ${MAN5} ${DESTDIR}${MANPREFIX}/man/man5
+
+	mkdir -p ${TMPLDIR}
+	cd ${TEMPLATES} && find . | \
+		cpio -pdm ${TMPLDIR}
 
 install-docs:
 	mkdir -p ${DESTDIR}${DOCSDIR}
