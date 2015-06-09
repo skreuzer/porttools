@@ -113,6 +113,10 @@ case ${PORTPREFIX} in
 		CATEGORIES=python
 		WWW=http://pypi.python.org/pypi/${PORTNAME}/
 		;;
+	rubygem)
+		CATEGORIES=rubygems
+		WWW=http://rubygems.org/gems/${PORTNAME}
+		;;
 	*)
 		WWW=http://example.com
 		WANT_PKG_PLIST=Y
