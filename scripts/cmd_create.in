@@ -111,7 +111,7 @@ case ${PORTPREFIX} in
 		;;
 	py)
 		CATEGORIES=python
-		WWW=http://pypi.python.org/pypi/${PORTNAME}/
+		WWW=https://pypi.python.org/pypi/${PORTNAME}
 		;;
 	rubygem)
 		CATEGORIES=rubygems
