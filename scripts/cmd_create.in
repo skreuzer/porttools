@@ -103,7 +103,7 @@ case ${PORTPREFIX} in
 		WANT_PKG_PLIST=Y
 		;;
 	R-cran)
-		WWW=http://cran.r-project.org/web/${PORTNAME}/
+		WWW=https://cran.r-project.org/web/packages/${PORTNAME}/
 		;;
 	pear)
 		CATEGORIES=pear
