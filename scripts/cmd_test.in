@@ -1,9 +1,6 @@
 # cmd_test
 # Module for port(1)
 # SUMMARY: test port (build, install, package, deinstall)
-#
-# $Id: cmd_test.in,v 1.8 2009/09/09 19:58:30 skolobov Exp $
-#
 
 # Check if this script is run via port(1)
 if [ "${PORTTOOLS}" = "" ]

@@ -1,9 +1,6 @@
 # cmd_submit
 # Module for port(1)
 # SUMMARY: submit Problem Report with new port, or port change/update (BROKEN)
-#
-# $Id: cmd_submit.in,v 1.7 2009/09/09 19:58:30 skolobov Exp $
-#
 
 # Check if this script is run via port(1)
 if [ "${PORTTOOLS}" = "" ]

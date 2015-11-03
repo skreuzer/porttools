@@ -1,9 +1,6 @@
 # cmd_help
 # Module for port(1)
 # SUMMARY: display this command summary
-#
-# $Id: cmd_help.in,v 1.2 2004/08/06 21:57:22 skolobov Exp $
-#
 
 # Print synopsis
 echo "FreeBSD Port Tools __VERSION__"

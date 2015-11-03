@@ -1,8 +1,5 @@
 # util_diff
 # port(1) helper script to generate a diff or a shar file
-#
-# $Id: util_diff.in,v 1.4 2009/09/09 19:58:30 skolobov Exp $
-#
 
 # Check if this script is run via port(1)
 if [ "${PORTTOOLS}" = "" ]

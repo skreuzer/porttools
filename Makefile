@@ -2,8 +2,6 @@
 #
 # Makefile
 #
-# $Id: Makefile,v 1.24 2009/09/09 19:58:30 skolobov Exp $
-#
 
 # Package name and version
 PORTNAME?=	porttools

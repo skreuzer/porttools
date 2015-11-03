@@ -1,9 +1,6 @@
 # cmd_upgrade
 # Module for port(1)
 # SUMMARY: upgrade a port
-#
-# $Id: cmd_upgrade.in,v 1.2 2009/09/09 19:58:30 skolobov Exp $
-#
 
 # Check if this script is run via port(1)
 if [ "${PORTTOOLS}" = "" ]

@@ -1,9 +1,6 @@
 # cmd_getpr
 # Module for port(1)
 # SUMMARY: get patch/shar from a PR
-#
-# $Id: cmd_getpr.in,v 1.1 2006/04/30 22:39:52 skolobov Exp $
-#
 
 # Check if this script is run via port(1)
 if [ "${PORTTOOLS}" = "" ]
