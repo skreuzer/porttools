@@ -1,9 +1,6 @@
 # cmd_fetch
 # Module for port(1)
 # SUMMARY: fetch distfile(s) of new port version
-#
-# $Id: cmd_fetch.in,v 1.1 2003/10/21 05:22:31 skolobov Exp $
-#
 
 # Check if this script is run via port(1)
 if [ "${PORTTOOLS}" = "" ]

@@ -1,8 +1,5 @@
 # port(1)
 # Front-end interface to Port Tools functions
-#
-# $Id: port.in,v 1.1 2003/10/21 05:22:31 skolobov Exp $
-#
 
 # Port Tools configuration file
 PORTTOOLS="${HOME}/.porttools"

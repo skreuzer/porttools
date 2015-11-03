@@ -1,9 +1,6 @@
 # cmd_followup
 # Module for port(1)
 # SUMMARY: Followup on a Problem Report with change/update (BROKEN)
-#
-# $Id: cmd_followup.in,v 1.7 2014/03/02 16:55:00 xmj$
-#
 
 # Check if this script is run via port(1)
 if [ "${PORTTOOLS}" = "" ]
