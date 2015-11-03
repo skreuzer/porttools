@@ -82,16 +82,22 @@ then
 	fi
 fi
 
+PORTNAME=${PORTBASE}
+
 if [ ! -z ${PORTPREFIX} ]
 then
-	# Change the location of the port template files to
-	# use from default to the port prefix
-    TEMPLATE_PREFIX=${PORTPREFIX}
+	# Check to make sure that a template for this prefix exists
+	# before changing the value of TEMPLATE_PREFIX from default
+	# https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=204001
+	if [ -d ${TEMPLATE_DIR}/${PORTPREFIX} ]
+	then
+		# Change the location of the port template files to
+		# use from default to the port prefix
+		TEMPLATE_PREFIX=${PORTPREFIX}
 
-	# Strip the port prefix from PORTNAME
-	PORTNAME=$(echo ${PORTBASE} | sed "s|${PORTPREFIX}-||")
-else
-	PORTNAME=${PORTBASE}
+		# Strip the port prefix from PORTNAME
+		PORTNAME=$(echo ${PORTBASE} | sed "s|${PORTPREFIX}-||")
+	fi
 fi
 
 case ${PORTPREFIX} in
