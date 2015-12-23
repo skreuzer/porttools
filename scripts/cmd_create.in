@@ -1,6 +1,6 @@
 # cmd_create
 # Module for port(1)
-# SUMMARY: create new port from template using newfile(1)
+# SUMMARY: create a new port from a template
 
 # Check if this script is run via port(1)
 if [ "${PORTTOOLS}" = "" ]; then
