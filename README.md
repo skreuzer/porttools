@@ -12,7 +12,6 @@ FreeBSD Port Tools consist of the several small scripts run from
 - `port diff`: generate a diff against a previous version of the port
 - `port fetch`: fetch distfile(s) of a new version of the port
 - `port followup`: followup on a PR with change/update
-- `port getpr`: get patch/shar from a PR
 - `port help`: display usage summary for `port(1)` commands
 - `port install`: install a port
 - `port submit`: submit a PR with new port, or port change/update

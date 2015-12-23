@@ -11,7 +11,7 @@ VERSIONSTRING=	${PORTVERSION}
 
 PROGRAM=	scripts/port
 SCRIPTS=	scripts/cmd_commit scripts/cmd_create scripts/cmd_diff \
-		scripts/cmd_fetch scripts/cmd_followup scripts/cmd_getpr \
+		scripts/cmd_fetch scripts/cmd_followup \
 		scripts/cmd_help scripts/cmd_install scripts/cmd_submit \
 		scripts/cmd_test scripts/cmd_upgrade scripts/util_diff
 IN_FILES=	${SCRIPTS} ${PROGRAM}
