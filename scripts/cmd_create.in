@@ -66,7 +66,7 @@ else
 fi
 
 PORTBASE=$(basename ${ARG_PORTNAME})
-PORTPREFIX=$(echo ${PORTBASE} | cut -d- -f1)
+PORTPREFIX=$(echo ${PORTBASE} | cut -s -d- -f1)
 
 # Work around the fact that R modules are
 # prefixed with R-cran
