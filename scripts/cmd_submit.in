@@ -9,7 +9,8 @@ then
 	exit 1
 fi
 
-echo "Port submit is currently broken"
+echo "Port submit is currently broken."
+echo "Please consider using ports-mgmt/freebsd-bugzilla-cli"
 exit 1
 
 # Usage
