@@ -68,6 +68,7 @@ else
 	mkdir -p ${ARG_PORTNAME}
 fi
 
+CATEGORIES=$(basename ${PWD})
 PORTBASE=$(basename ${ARG_PORTNAME})
 PORTPREFIX=$(echo ${PORTBASE} | cut -d- -f1)
 
@@ -96,7 +97,7 @@ fi
 
 case ${PORTPREFIX} in
 	p5)
-		CATEGORIES=perl5
+		CATEGORIES="${CATEGORIES} perl5"
 		MASTER_SITES=CPAN
 		PKGNAMEPREFIX=p5-
 		WWW=http://search.cpan.org/dist/${PORTNAME}/
@@ -106,15 +107,15 @@ case ${PORTPREFIX} in
 		WWW=http://cran.r-project.org/web/${PORTNAME}/
 		;;
 	pear)
-		CATEGORIES=pear
+		CATEGORIES="${CATEGORIES} pear"
 		WWW=http://pear.php.net/package/${PORTNAME}/
 		;;
 	py)
-		CATEGORIES=python
+		CATEGORIES="${CATEGORIES} python"
 		WWW=http://pypi.python.org/pypi/${PORTNAME}/
 		;;
 	rubygem)
-		CATEGORIES=rubygems
+		CATEGORIES="${CATEGORIES} rubygems"
 		WWW=http://rubygems.org/gems/${PORTNAME}
 		;;
 	*)
