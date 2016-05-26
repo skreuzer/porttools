@@ -1,7 +1,6 @@
 FreeBSD Port Tools
 ==================
 
-
 Introduction
 ------------
 
@@ -11,10 +10,8 @@ FreeBSD Port Tools consist of the several small scripts run from
 - `port create`: create a new port from a template
 - `port diff`: generate a diff against a previous version of the port
 - `port fetch`: fetch distfile(s) of a new version of the port
-- `port followup`: followup on a PR with change/update
 - `port help`: display usage summary for `port(1)` commands
 - `port install`: install a port
-- `port submit`: submit a PR with new port, or port change/update
 - `port test`: automate testing a new port or a port update
 - `port upgrade`: upgrade a port
 
@@ -65,28 +62,37 @@ Let me give a quick overview:
    xmj@mx12:~/ports/ipsvd% port test
 ```
 
-5. Once I am satisfied with the results, let us submit a PR
-   with the port update:
-
-```
-   xmj@mx12:~/ports/ipsvd% port submit
-```
-
-6. Sometimes things need work after submitting. Here's where I use followup to
-   submit the patches. It has the neat feature of automatically obtaining the
-   right subject line from the PR number supplied as argument.
-
-```
-   port followup -n <PR #>
-```
-
 Now, this interview consists of a few very simple cases, and it did not show off
 all the features of the Port Tools, so please check `port(1)` manual page for details.
 
 Thanks
 ------
-Several people have contributed ideas and/or code to the FreeBSD Port Tools,
-see `THANKS` file for details.
+
+  * Cheng-Lung Sung
+  * Diane Bruce
+  * Dmitry Marakasov
+  * HASHI Hiroaki
+  * Hans Fredrik Nordhaug
+  * Janos Mohacsi
+  * Jens Rehsack
+  * Johannes Meixner
+  * Lars Thegler
+  * Li-Wen Hsu
+  * Mathieu Arnold
+  * Mike Johnson
+  * Nicola Vitale
+  * Paul Dlug
+  * Radim Kolar
+  * Remi ...
+  * Roman Bogorodskiy
+  * Sergey Matveychuk
+  * Sunpoet Po-Chuan Hsieh
+  * Tim Bishop
+  * Tim Middleton
+  * Toni Viemero
+  * Winston Weinert
+  * Xin LI
+  * Yen-Ming Lee
 
 TODO
 ----
