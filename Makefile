@@ -5,7 +5,7 @@
 
 # Package name and version
 PORTNAME?=	porttools
-PORTVERSION?=	1.01
+PORTVERSION?=	1.07
 DISTNAME?=	${PORTNAME}-${PORTVERSION}
 VERSIONSTRING=	${PORTVERSION}
 
@@ -16,7 +16,7 @@ SCRIPTS=	scripts/cmd_commit scripts/cmd_create scripts/cmd_diff \
 		scripts/cmd_test scripts/cmd_upgrade scripts/util_diff
 IN_FILES=	${SCRIPTS} ${PROGRAM}
 INC_HEADER=	scripts/inc_header
-DOCS=		LICENSE NEWS README THANKS
+DOCS=		LICENSE NEWS README.md THANKS
 TEMPLATES=	tmpl
 MAN1=		man/port.1
 MAN5=		man/porttools.5
