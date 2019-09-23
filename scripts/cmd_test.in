@@ -116,6 +116,11 @@ SUDO="sudo"
 
 # Create a temporary dir for temporary package database
 PKG_DBDIR="`${SUDO} mktemp -d -t pkg_db`" || exit 1
+# Copy database to temp. location to avoid misleading "does not belong to any
+# package" error messages from make stage-qa and "not registered (normal if it
+# belongs to base)" error messages from actual-package-depends
+( cd /var/db/pkg && ${SUDO} cp -R . ${PKG_DBDIR} )
+${SUDO} chmod go+rx ${PKG_DBDIR}
 
 # Do not attempt to clean up in PREFIX if USE_X_PREFIX=yes
 LOCALBASE="`make -V LOCALBASE`"
@@ -159,9 +164,10 @@ do
 		if [ ! -z ${PKGNG} ]
 		then
 			echo "===>  Checking pkg info"
-			pkg info -f ${PKGNAME}
+			PKG_DBDIR=${PKG_DBDIR} pkg info -f ${PKGNAME}
 			echo "===>  Checking shared library dependencies"
-			pkg query %B ${PKGNAME} | sed -e "s,^,${PREFIX}," | \
+			PKG_DBDIR=${PKG_DBDIR} pkg query %B ${PKGNAME} | \
+					sed -e "s,^,${PREFIX}," | \
 					xargs ldd 2>&1 | \
 					grep -v "not a dynamic executable" | \
 					grep '=>' | awk '{print $3;}' | sort -u
