@@ -1,6 +1,6 @@
 # cmd_commit
 # Module for port(1)
-# SUMMARY: commit a port into the FreeBSD Ports SVN Repository
+# SUMMARY: commit a port into the FreeBSD Ports GIT Repository
 
 # Check if this script is run via port(1)
 if [ "${PORTTOOLS}" = "" ]
@@ -56,7 +56,7 @@ echo "===> Your username on freefall: ${FREEFALL_USERNAME}"
 
 # Determine if this is a new port
 MODE="update"
-svn status Makefile 2>&1 1>/dev/null | grep -qs 'svn: warning: W155007:'
+git status Makefile 2>&1 | grep -qs 'fatal: not a git repository'
 if [ $? -eq 0 ]
 then
 	MODE="new"
@@ -75,7 +75,7 @@ then
 fi
 
 
-# See if SVN message already exists, and use that for commit log
+# See if GIT message already exists, and use that for commit log
 MSG="svn-msg"
 FLAGS=""
 
@@ -90,10 +90,6 @@ then
 
 	${PORTSDIR}/Tools/scripts/addport -d `pwd` -u ${FREEFALL_USERNAME} ${FLAGS}
 else
-	# Make sure we are working with up-to-date version
-	echo "===> Pre-commit SVN update"
-	svn update
-
 	if [ -e ${MSG} ]
 	then
 		FLAGS="-F ${MSG}"
@@ -104,17 +100,17 @@ else
 			echo '============================================='
 			cat ${MSG}
 			echo '============================================='
-			read -p "Is the SVN message above correct? (y/n)" ANSWER
+			read -p "Is the GIT message above correct? (y/n)" ANSWER
 			[ "${ANSWER}" = "y" ] && break
 			${VISUAL:-vi} ${MSG}
 		done
 	fi
 	# Commit the port update
 	echo "===> Committing port update"
-	svn commit ${FLAGS}
+	git commit ${FLAGS}
 
 fi
-# Remove SVN message file only if commit was successful
+# Remove GIT message file only if commit was successful
 [ $? -eq 0 -a -e ${MSG} ] && rm ${MSG}
 
 echo "===> Done"

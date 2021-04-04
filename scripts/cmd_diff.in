@@ -17,7 +17,6 @@ FreeBSD Port Tools __VERSION__
 Usage: port diff [-h] [-d <diff mode>]
 	-h	- Display this usage summary
 	-d <diff mode> - Select diff generation mode:
-		SVN - against SVN
 		GIT - against git
 		<dir> - against Ports tree in <dir>
 		<pattern> - against original port in <pwd><pattern>
@@ -66,7 +65,7 @@ done
 # View patch using specified viewer
 if [ "${DIFF_VIEWER}" = "" ]
 then
-	DIFF_VIEWER=`which cdiff`
+	DIFF_VIEWER=`which ydiff`
 	[ -n "${DIFF_VIEWER}" ] || DIFF_VIEWER="more"
 fi
 echo "===> Viewing diff with ${DIFF_VIEWER}"

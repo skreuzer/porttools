@@ -53,7 +53,7 @@ Directory where PREFIX and PKG_DBDIR subdirectories will be created.
 Default to
 .Pa /tmp .
 .It Ev DIFF_MODE
-Selects diff generation mode. Valid values are: SVN, directory
+Selects diff generation mode. Valid values are: GIT, directory
 .Pq e.g. Pa /usr/ports ,
 or suffix
 .Pq e.g. Pa .orig .
@@ -64,7 +64,7 @@ and
 .Xr shar 1
 files.
 Default to
-.Xr cdiff 1
+.Xr ydiff 1
 if present in the ${PATH},
 with a fallback to
 .Xr more 1 .
@@ -72,7 +72,7 @@ with a fallback to
 .Pp
 FreeBSD Port Tools configuration file is generated automatically if missing.
 .Sh SEE ALSO
-.Xr cdiff 1 ,
+.Xr ydiff 1 ,
 .Xr diff 1 ,
 .Xr port 1 ,
 .Xr shar 1 .
