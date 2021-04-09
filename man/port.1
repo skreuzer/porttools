@@ -97,7 +97,7 @@ Generated file then passed to the viewer specified in
 .Pa ~/.porttools
 configuration file.
 Default viewer is
-.Xr cdiff 1
+.Xr ydiff 1
 if present,
 otherwise -
 .Xr more 1 .
@@ -116,8 +116,8 @@ display usage summary for this command.
 .It Fl d Ar mode
 select diff generation mode:
 .Bl -tag -width ".Pa suffix"
-.It SVN
-diff against SVN repository (default).
+.It GIT
+diff against GIT repository (default).
 .It Pa dir
 diff against original version of the port in the Ports tree with root at
 .Pa dir
@@ -138,10 +138,10 @@ generate SHAR as if the port was new
 .Pp
 Example:
 .Pp
-.Dl % port diff -d SVN
+.Dl % port diff -d GIT
 .Pp
 This would generate unified diff of modified checked-out working copy
-of the port against SVN repo.
+of the port against GIT repo.
 .It Ar fetch
 Fetch one or more distfiles of new or updated port version
 and updates checksums.
@@ -350,8 +350,8 @@ See
 for detailed description of the format.
 .El
 .Sh SEE ALSO
-.Xr svn 1 ,
-.Xr cdiff 1 ,
+.Xr git 1 ,
+.Xr ydiff 1 ,
 .Xr diff 1 ,
 .Xr more 1 ,
 .Xr portlint 1 ,

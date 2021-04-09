@@ -26,7 +26,6 @@ Usage:	port submit [-h] [-m <mode>] [-d <diff mode>]
 		change - changing a port
 		update - updating a port to newer version
 	-d <diff mode> - Select diff generation mode:
-		SVN - against SVN
 		GIT - against git
 		<dir> - against Ports tree in <dir>
 		<pattern> - against original port in <pwd><pattern>
@@ -131,13 +130,13 @@ done
 # Determine if this is a new port
 if [ "${MODE}" = "" ]
 then
-	svn status Makefile 2>&1 1>/dev/null | grep -qs 'svn: warning: W155007:'
+	git status Makefile 2>&1 | grep -qs 'fatal: not a git repository'
 	[ $? -eq 0 ] || [ "`grep '\$FreeBSD: ' Makefile`" ] || MODE="new"
 fi
 
 # util_diff will set
 # - PORTBASENAME if PORTNAME != port's directory name
-# - DIFF_TYPE to SVN, GIT, ports, or suffix
+# - DIFF_TYPE to GIT, ports, or suffix
 PORTBASENAME=""
 DIFF_TYPE=""
 
